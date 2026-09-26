@@ -4,7 +4,7 @@ title: "GoBoard リリース計画"
 description: "GoBoard v0.1.0 のリリース計画。Intent・満足条件・Unit 分解（U1〜U4）と依存関係・実装エントロピー評価・Bolt 1〜4 の計画・リスク台帳・未確認の仮定を定める。"
 tags: [development,goboard]
 status: draft
-generated: { by: process:claude-code, at: 2026-09-26T07:56:09Z }
+generated: { by: process:claude-code, at: 2026-09-26T08:02:56Z }
 ---
 
 # GoBoard リリース計画
@@ -99,7 +99,7 @@ U2 と U3 は並列に進められますが、担当は 1 つのモブのため�
 
 | Bolt | 詳細計画 | 状態 |
 | :--- | :--- | :--- |
-| Bolt 1 | [bolt_1_plan.md](./bolt_1_plan.md) | 承認済み・実行中 |
+| Bolt 1 | [bolt_1_plan.md](./bolt_1_plan.md) | 完了（表示の最終確認待ち） |
 | Bolt 2 | Bolt 1 完了時に作成する | 未着手 |
 | Bolt 3 | Bolt 2 完了時に作成する | 未着手 |
 | Bolt 4 | Bolt 3 完了時に作成する | 未着手 |
@@ -128,11 +128,11 @@ U2 と U3 は並列に進められますが、担当は 1 つのモブのため�
 
 | Bolt | 状態 | 完了ストーリー |
 | :--- | :--- | :--- |
-| Bolt 1 | 実行中 | - |
+| Bolt 1 | 完了（表示の最終確認待ち） | S01・S02 完了、S09 の一部（クリックで犬を置く） |
 | Bolt 2 | 未着手 | - |
 | Bolt 3 | 未着手 | - |
 | Bolt 4 | 未着手 | - |
-| **合計** | **0 / 4 Bolt** | **0 / 10 ストーリー** |
+| **合計** | **1 / 4 Bolt** | **2 / 10 ストーリー（S09 は一部）** |
 
 ## 改訂履歴
 
