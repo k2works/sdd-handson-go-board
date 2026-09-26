@@ -29,5 +29,7 @@ export function rejectionMessage(reason: RejectionReason): string {
       return 'そのマスにはすでに駒があるため置けません';
     case 'outside':
       return '盤の外には置けません';
+    case 'finished':
+      return 'ゲームは終わっているため置けません';
   }
 }
