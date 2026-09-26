@@ -28,6 +28,13 @@ export class Board {
   pieceAt(position: Position): Cell {
     return this.cells[indexOf(position)] ?? null;
   }
+
+  /** 指定したマスに駒を置いた新しい盤を返す（R5）。この盤は変わらない（R6）。 */
+  place(position: Position, piece: Piece): Board {
+    const cells = [...this.cells];
+    cells[indexOf(position)] = piece;
+    return new Board(cells);
+  }
 }
 
 function indexOf({ row, col }: Position): number {
