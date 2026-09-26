@@ -13,9 +13,17 @@ BeforeAll(async function () {
   server = await createServer({ server: { port: 0, strictPort: false }, logLevel: 'error' });
   await server.listen();
   // PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH を指定すると、そのブラウザで実行する（Playwright のブラウザを入れていない環境向け）。
-  browser = await chromium.launch({
-    executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || undefined,
-  });
+  try {
+    browser = await chromium.launch({
+      executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || undefined,
+    });
+  } catch (error) {
+    await server.close();
+    throw new Error(
+      '受け入れテスト用の Chromium を起動できません。先に `npm run test:acceptance:setup` を実行してください。' +
+        `\n${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
 });
 
 Before(async function (this: GoBoardWorld) {

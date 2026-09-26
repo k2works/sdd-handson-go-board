@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:acceptance:setup": "playwright install chromium",
     "test:acceptance": "node --import tsx ./node_modules/@cucumber/cucumber/bin/cucumber.js",
     "test:acceptance:wip": "node --import tsx ./node_modules/@cucumber/cucumber/bin/cucumber.js --profile wip"
   },
@@ -27,7 +28,7 @@
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.1",
     "jsdom": "^30.1.1",
-    "playwright": "^1.63.0",
+    "playwright": "1.56.1",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",
     "vite": "^8.3.1",

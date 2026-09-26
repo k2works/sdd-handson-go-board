@@ -4,7 +4,7 @@ title: "GoBoard リリース計画"
 description: "GoBoard v0.1.0 のリリース計画。Intent・満足条件・Unit 分解（U1〜U4）と依存関係・実装エントロピー評価・Bolt 1〜4 の計画・リスク台帳・未確認の仮定を定める。"
 tags: [development,goboard]
 status: draft
-generated: { by: process:claude-code, at: 2026-09-26T08:30:32Z }
+generated: { by: process:claude-code, at: 2026-09-26T08:36:16Z }
 ---
 
 # GoBoard リリース計画
@@ -94,6 +94,7 @@ U2 と U3 は並列に進められますが、担当は 1 つのモブのため�
 - [ ] Bolt に含めたストーリーのシナリオから `@wip` を外し、`npm run test:acceptance` が成功する
 - [ ] Bolt に含めたストーリーの受入条件が、すべて自動テストで通っている
 - [ ] `apps/goboard/` で `npm run typecheck`・`npm test`・`npm run build` が成功する
+- [ ] push したコミットで GitHub Actions の GoBoard CI が成功している
 - [ ] ルール定義にない振る舞いを加えていない
 - [ ] プロダクトオーナーが承認ゲートでコードと動作を確認した
 - [ ] ストーリーの受入条件のチェックボックスと本計画の進捗を更新した
@@ -151,3 +152,4 @@ U2 と U3 は並列に進められますが、担当は 1 つのモブのため�
 | 2026-09-26 | プロダクトオーナーの指示で、受入条件を日本語 Gherkin にし、Cucumber と Playwright の受け入れテストを導入（ADR 0002）。完了条件に受け入れテストを加え、リスク K6 を追加 |
 | 2026-09-26 | Bolt 2 完了（S03・S04・S05・S09）。進捗を 2 / 5 Bolt、6 / 12 ストーリーに更新 |
 | 2026-09-26 | Bolt 3 完了（S06・S07、S10 の勝ち）。進捗を 3 / 5 Bolt に更新 |
+| 2026-09-26 | 受け入れテストが手元の既定の実行で失敗していた（Playwright の版と Chromium の版のずれ）。Playwright を 1.56.1 に固定し、GitHub Actions の GoBoard CI を追加。完了条件に CI の成功を加えた |

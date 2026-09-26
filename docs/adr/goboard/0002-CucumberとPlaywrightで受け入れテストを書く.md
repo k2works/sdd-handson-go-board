@@ -4,7 +4,7 @@ title: "0002 Cucumber と Playwright で受け入れテストを書く"
 description: "GoBoard の受入条件を日本語 Gherkin のフィーチャーファイルにし、Cucumber-JS と Playwright でブラウザから検証する決定。"
 tags: [adr,goboard]
 status: draft
-generated: { by: process:claude-code, at: 2026-09-26T08:14:10Z }
+generated: { by: process:claude-code, at: 2026-09-26T08:36:16Z }
 ---
 
 # 0002 Cucumber と Playwright で受け入れテストを書く
@@ -46,11 +46,13 @@ GoBoard のユーザーストーリーの受入条件を日本語の Gherkin（�
 - Bolt の完了条件に「対象ストーリーのシナリオから `@wip` を外し、`npm run test:acceptance` が成功する」を加える。
 - 受入条件は、ユーザーストーリーの文書とフィーチャーファイルの 2 か所に書かれる。受入条件を変えるときは両方を同時に更新する（リスク K6）。
 - 外部ライブラリとして `@cucumber/cucumber`・`playwright`・`tsx`・`@types/node` を追加する。
-- Playwright は既定では、自分のバージョンに合うブラウザを使う。ブラウザを別に用意した環境では、環境変数 `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` に Chromium の実行ファイルのパスを指定する。ブラウザが無い環境では、先に `npx playwright install chromium` を実行する。
+- Playwright は、自分のバージョンに合う版の Chromium を使う。版がずれるとブラウザを起動できず、受け入れテストが実行前に失敗する（導入直後に、最新の 1.63 を入れたことでこの失敗が起きた）。そのため Playwright のバージョンを 1.56.1 に固定し（`^` を付けない）、ブラウザは `npm run test:acceptance:setup` で入れる。ブラウザを別に用意した環境では、環境変数 `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` に Chromium の実行ファイルのパスを指定する。
+- GitHub Actions（`.github/workflows/goboard-ci.yml`）で、`apps/goboard/` を変更したコミットの push と Pull Request のたびに、型チェック・単体テスト・ビルド・受け入れテストを実行する。
 
 ## コンプライアンス
 
 - `apps/goboard/` で `npm run test:acceptance` が成功する。
+- GitHub Actions の GoBoard CI が成功している。
 - すべてのフィーチャーファイルに、ストーリーのタグ（`@S01`〜）と、シナリオごとのルールのタグ（`@R1`〜）が付いている。
 - 実装を壊すと受け入れテストが失敗する（導入時に、犬の表示を別の絵文字に変えると失敗することを確認した）。
 

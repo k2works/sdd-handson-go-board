@@ -1,0 +1,65 @@
+name: GoBoard CI
+
+# GoBoard（apps/goboard）を変更したコミットを push したとき、または Pull Request で、
+# 型チェック・単体テスト・ビルド・受け入れテスト（Cucumber と Playwright）を実行する。
+on:
+  push:
+    paths:
+      - 'apps/goboard/**'
+      - '.github/workflows/goboard-ci.yml'
+  pull_request:
+    paths:
+      - 'apps/goboard/**'
+      - '.github/workflows/goboard-ci.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: goboard-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: apps/goboard
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+          cache-dependency-path: apps/goboard/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Install Chromium for acceptance tests
+        run: npx playwright install --with-deps chromium
+
+      - name: Acceptance tests
+        run: npm run test:acceptance
+
+      - name: Upload acceptance test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-report
+          path: apps/goboard/reports/cucumber-report.html
+          if-no-files-found: ignore
