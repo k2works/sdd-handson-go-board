@@ -39,6 +39,8 @@ export function rejectionMessage(reason: RejectionReason): string {
       return 'そのマスにはすでに駒があるため置けません';
     case 'outside':
       return '盤の外には置けません';
+    case 'exactThrees':
+      return 'ちょうど 3 つの並びが同時に 2 か所以上できるため置けません';
     case 'finished':
       return 'ゲームは終わっているため置けません';
   }

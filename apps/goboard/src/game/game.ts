@@ -3,8 +3,18 @@ import { BOARD_SIZE, Board, DIRECTIONS, type Piece, type Placeability, type Posi
 /** 勝ちになる連続の数（R7：5 つ以上）。 */
 export const WIN_LENGTH = 5;
 
-/** 置けなかった理由。finished は、勝負がついてゲームが終わっている（S07）。 */
-export type RejectionReason = Exclude<Placeability, 'ok'> | 'finished';
+/** 「ちょうど 3 つの並び」の数（R9）。 */
+export const EXACT_THREE_LENGTH = 3;
+
+/** 置けなくなる「ちょうど 3 つの並び」の数（R9：同時に 2 か所以上）。 */
+export const EXACT_THREES_LIMIT = 2;
+
+/**
+ * 置けなかった理由。
+ * finished：勝負がついてゲームが終わっている（S07）。
+ * exactThrees：ちょうど 3 つの並びが同時に 2 か所以上できる（R9）。
+ */
+export type RejectionReason = Exclude<Placeability, 'ok'> | 'exactThrees' | 'finished';
 
 /** 勝負の状態。ongoing：対局中、win：勝ちが決まった（R7）。 */
 export type Outcome = { readonly kind: 'ongoing' } | { readonly kind: 'win'; readonly winner: Piece };
@@ -38,6 +48,7 @@ export class Game {
   /**
    * 手番のプレイヤーの駒を置く（R5）。置いたあとに勝ちを判定し（R7・R8）、勝ちでなければ手番を相手に渡す（R4）。
    * 置けなければ、盤も手番も変えずに理由を返す（パスにはならない）。
+   * 置けるかどうか（R9 を含む）は、置く前に判定する。そのため R9 に当たるマスは、5 つ並ぶマスでも置けない。
    */
   play(position: Position): PlayResult {
     if (this.outcome.kind !== 'ongoing') {
@@ -48,6 +59,9 @@ export class Game {
       return { ok: false, game: this, reason: placeability };
     }
     const board = this.board.place(position, this.turn);
+    if (countExactThrees(board, position) >= EXACT_THREES_LIMIT) {
+      return { ok: false, game: this, reason: 'exactThrees' };
+    }
     const outcome: Outcome = makesWinningLine(board, position) ? { kind: 'win', winner: this.turn } : ONGOING;
     return { ok: true, game: new Game(board, opponentOf(this.turn), outcome) };
   }
@@ -56,6 +70,17 @@ export class Game {
 /** 指定したマスを通る 4 方向のどれかに、5 つ以上の連続があるか（R7）。 */
 function makesWinningLine(board: Board, position: Position): boolean {
   return Object.values(DIRECTIONS).some((direction) => board.runLength(position, direction) >= WIN_LENGTH);
+}
+
+/**
+ * 指定したマスを通る 4 方向のうち、ちょうど 3 つの並びになっている方向の数（R9）。
+ * runLength は同じ種類の駒があいだを空けずに連続する最大の長さなので、ちょうど 3 なら
+ * 両隣に同じ種類の駒はない。4 つ以上の連続・あいだの空いた並びは含まれず、
+ * 相手の駒や盤の端でふさがれていても数えられる。
+ */
+function countExactThrees(board: Board, position: Position): number {
+  return Object.values(DIRECTIONS).filter((direction) => board.runLength(position, direction) === EXACT_THREE_LENGTH)
+    .length;
 }
 
 /** 盤全体から、5 つ以上の連続がある駒の種類を探す。 */
