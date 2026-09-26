@@ -4,7 +4,7 @@ title: "GoBoard Bolt 5 計画（引き分けとリリース）"
 description: "GoBoard Bolt 5（引き分けとリリース）のステップ計画と結果。盤が埋まったときと置けるマスがなくなったときの引き分け、引き分けの表示、v0.1.0 のバージョンと CHANGELOG を扱う。"
 tags: [development,goboard]
 status: draft
-generated: { by: process:claude-code, at: 2026-09-26T09:33:45Z }
+generated: { by: process:claude-code, at: 2026-09-26T09:34:46Z }
 ---
 
 # GoBoard Bolt 5 計画（引き分けとリリース）
@@ -40,13 +40,13 @@ generated: { by: process:claude-code, at: 2026-09-26T09:33:45Z }
 - [x] 2. 画面のテストを書き、「引き分け」の表示を実装する（S10）
 - [x] 3. S08・S12・S10（引き分け）のシナリオから `@wip` を外し、ステップ定義を実装する
 - [x] 4. バージョンを 0.1.0 にし、CHANGELOG を作る
-- [ ] 5. 受入条件のチェックボックス・リリース計画の進捗・本計画の結果を更新し、CI の成功を確かめる
+- [x] 5. 受入条件のチェックボックス・リリース計画の進捗・本計画の結果を更新し、CI の成功を確かめる
 
 ## 完了条件
 
 - [x] すべてのシナリオから `@wip` がなくなり、`npm run test:acceptance` が成功する
 - [x] `apps/goboard/` で `npm run typecheck`・`npm test`・`npm run build` が成功する
-- [ ] push したコミットで GitHub Actions の GoBoard CI が成功している
+- [x] push したコミットで GitHub Actions の GoBoard CI が成功している
 - [x] `src/game/` が React や DOM に依存していない
 - [x] ルール定義にない振る舞いを加えていない
 
@@ -57,6 +57,7 @@ generated: { by: process:claude-code, at: 2026-09-26T09:33:45Z }
 | 受け入れテスト | 60 シナリオ・379 ステップすべて成功。`@wip` のシナリオは 0（Bolt 5 で 6 シナリオを追加） |
 | 単体テスト | 79 件すべて成功（ルール 63 件、画面 16 件） |
 | 型チェック・ビルド | `npm run typecheck`・`npm run build` 成功 |
+| CI | GoBoard CI（コミット f96b27a、実行 36233125034）が成功 |
 | 依存の向き | `src/game/` に React・DOM の import なし |
 | 変異の確認 | 置いたあとに引き分けを判定しないように実装を壊すと、受け入れテストが 4 シナリオ失敗することを確認して元に戻した |
 | リリース | `apps/goboard/package.json` を 0.1.0 にし、`apps/goboard/CHANGELOG.md` を作成。Git のタグ付けはプロダクトオーナーの判断を待つ |
