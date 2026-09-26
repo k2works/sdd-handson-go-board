@@ -1,6 +1,6 @@
 import { World, setWorldConstructor, type IWorldOptions } from '@cucumber/cucumber';
 import type { Page } from 'playwright';
-import type { Game, Piece, PlayResult } from '../../src/game';
+import type { Game, Piece, PlayResult, Position } from '../../src/game';
 import { BoardPage, type PieceName } from './board-page';
 
 /**
@@ -19,6 +19,10 @@ export class GoBoardWorld extends World {
   playerBefore?: PieceName;
   /** 置こうとする直前の盤（ブラウザで検証するとき）。 */
   boardBefore?: string[];
+  /** 勝負がついた時点の盤（ブラウザで検証するとき）。 */
+  boardAtEnd?: string[];
+  /** 最後の空いているマス（ルールに対して検証するとき）。 */
+  lastCell?: Position;
 
   constructor(options: IWorldOptions) {
     super(options);

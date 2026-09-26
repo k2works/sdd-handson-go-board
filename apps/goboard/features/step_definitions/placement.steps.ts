@@ -21,6 +21,10 @@ Given('{piece}の駒が {positions} にある', async function (this: GoBoardWor
 });
 
 Given('{piece}の手番である', async function (this: GoBoardWorld, piece: PieceName) {
+  if (this.game) {
+    assert.equal(toPieceName(this.game.turn), piece);
+    return;
+  }
   await ensureTurn(this, piece);
 });
 
@@ -35,7 +39,11 @@ When(
 When(
   '{piece}のプレイヤーが {int} 行 {int} 列に置こうとする',
   async function (this: GoBoardWorld, piece: PieceName, row: number, col: number) {
-    assert.equal(await this.board.currentTurn(), piece, `${piece}の手番ではない`);
+    // 勝負がついたあと（S07）は手番の表示がないため、対局中のときだけ手番を確かめる。
+    const turn = await this.board.turnIfOngoing();
+    if (turn) {
+      assert.equal(turn, piece, `${piece}の手番ではない`);
+    }
     this.playerBefore = piece;
     this.boardBefore = await this.board.snapshot();
     await this.board.clickCell(row, col);

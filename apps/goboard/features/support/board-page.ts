@@ -50,14 +50,24 @@ export class BoardPage {
     await this.grid().getByRole('button', { name: new RegExp(`^${row} 行 ${col} 列 `) }).click();
   }
 
+  /** 対局の状態の表示（例：「犬の手番」「犬の勝ち」）。 */
+  async statusText(): Promise<string> {
+    return ((await this.page.getByRole('status').textContent()) ?? '').trim();
+  }
+
+  /** 手番の表示から手番のプレイヤーを読み取る。勝負がついていれば null。 */
+  async turnIfOngoing(): Promise<PieceName | null> {
+    const match = /^(犬|猫)の手番$/.exec(await this.statusText());
+    return match ? (match[1] as PieceName) : null;
+  }
+
   /** 手番の表示（例：「犬の手番」）から、手番のプレイヤーを読み取る。 */
   async currentTurn(): Promise<PieceName> {
-    const text = (await this.page.getByRole('status').textContent()) ?? '';
-    const match = /^(犬|猫)の手番$/.exec(text.trim());
-    if (!match) {
-      throw new Error(`手番の表示を読み取れません: "${text}"`);
+    const turn = await this.turnIfOngoing();
+    if (!turn) {
+      throw new Error(`手番の表示を読み取れません: "${await this.statusText()}"`);
     }
-    return match[1] as PieceName;
+    return turn;
   }
 
   alert(): Locator {
