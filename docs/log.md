@@ -1,6 +1,7 @@
 # Docs Update Log
 
 ## 2026-09-26
+* **Creation**: [GoBoard ルール定義](/requirements/GoBoard_ルール定義.md) v1.0 を新規作成。プロダクトオーナーの説明と、委任を受けた AI 案のうち承認された内容を R1〜R8 として記録。
 * **Creation**: [BDD導入ガイド](/reference/BDD導入ガイド.md) を作成（claude-code/claude-opus-5）
 
 ## 2026-09-12
