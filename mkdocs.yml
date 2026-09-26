@@ -96,6 +96,8 @@ nav:
           - リリース完了報告書 v0.1.0: development/goboard/release_report-v0.1.0.md
   - 運用:
       - 概要: operation/index.md
+      - GoBoard:
+          - 概要: operation/goboard/index.md
   - レビュー:
       - 概要: review/index.md
   - ADR:
