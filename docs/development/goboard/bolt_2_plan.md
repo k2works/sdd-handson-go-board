@@ -3,8 +3,10 @@ type: Plan
 title: "GoBoard Bolt 2 計画（置けない場所と手番）"
 description: "GoBoard Bolt 2（置けない場所と手番）のステップ計画と結果。駒のあるマス・盤の外の拒否、犬と猫の交互の手番、手番と置けない理由の表示を実装する。"
 tags: [development,goboard]
-status: draft
-generated: { by: process:claude-code, at: 2026-09-26T08:20:32Z }
+status: stable
+generated: { by: process:claude-code, at: 2026-09-26T08:21:27Z }
+verified:
+  - { by: human:kakimomokuri, at: 2026-09-26T08:21:28Z }
 ---
 
 # GoBoard Bolt 2 計画（置けない場所と手番）
@@ -36,7 +38,7 @@ generated: { by: process:claude-code, at: 2026-09-26T08:20:32Z }
 - [x] 2. 対局のテストを書き、`Game` を実装する：先手は犬、置くと手番が交代、置けないときは盤も手番も変わらない（S03・S04・S05）
 - [x] 3. 画面のテストを書き、手番の表示・交互の着手・置けない理由の表示を実装する。パスの操作は置かない（S05・S09）
 - [x] 4. S03・S04・S05・S09 のシナリオから `@wip` を外し、ステップ定義を実装する
-- [?] 5. 受入条件のチェックボックス・リリース計画の進捗・本計画の結果を更新する。※ 最終ステップのため人が確認する
+- [x] 5. 受入条件のチェックボックス・リリース計画の進捗・本計画の結果を更新する。※ 最終ステップのため人が確認する
 
 ## 完了条件
 
