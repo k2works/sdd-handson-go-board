@@ -13,6 +13,22 @@ export type Position = {
 /** マスの状態。駒が置かれていなければ null（空いているマス）。 */
 export type Cell = Piece | null;
 
+/** 並びの向き。1 歩進むときの行と列の変化で表す。 */
+export type Direction = {
+  readonly dRow: number;
+  readonly dCol: number;
+};
+
+/** 並びの 4 方向（R7・R9）。 */
+export const DIRECTIONS = {
+  horizontal: { dRow: 0, dCol: 1 },
+  vertical: { dRow: 1, dCol: 0 },
+  /** 右下がりの斜め */
+  diagonalDown: { dRow: 1, dCol: 1 },
+  /** 右上がりの斜め */
+  diagonalUp: { dRow: -1, dCol: 1 },
+} as const satisfies Record<string, Direction>;
+
 /** 置けるかどうか。ok：置ける、occupied：駒がある（R5・R6）、outside：盤の外（R2）。 */
 export type Placeability = 'ok' | 'occupied' | 'outside';
 
@@ -33,6 +49,27 @@ export class Board {
       return null;
     }
     return this.cells[indexOf(position)] ?? null;
+  }
+
+  /**
+   * 指定したマスの駒と同じ種類の駒が、その向きの軸（前後両方向）に
+   * あいだを空けずにいくつ連続しているかを返す。空いているマスなら 0。
+   */
+  runLength(position: Position, direction: Direction): number {
+    const piece = this.pieceAt(position);
+    if (piece === null) {
+      return 0;
+    }
+    const countToward = (dRow: number, dCol: number): number => {
+      let count = 0;
+      let next = { row: position.row + dRow, col: position.col + dCol };
+      while (this.pieceAt(next) === piece) {
+        count++;
+        next = { row: next.row + dRow, col: next.col + dCol };
+      }
+      return count;
+    };
+    return 1 + countToward(direction.dRow, direction.dCol) + countToward(-direction.dRow, -direction.dCol);
   }
 
   /** 指定したマスに駒を置けるかどうか。 */
