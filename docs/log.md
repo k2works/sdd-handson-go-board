@@ -1,6 +1,64 @@
 # Docs Update Log
 
 ## 2026-09-26
+* **Verification**: [architecture](/design/goboard/architecture.md) を human:kakimomokuri が検証
+* **Verification**: [ui-design](/design/goboard/ui-design.md) を human:kakimomokuri が検証
+* **Verification**: [domain-model](/design/goboard/domain-model.md) を human:kakimomokuri が検証
+* **Verification**: [20260926](/journal/goboard/20260926.md) を human:kakimomokuri が検証
+* **Update**: GoBoard の用語集をドメインモデルのユビキタス言語に一本化（ルール定義 v1.3 は参照だけに）。コード上の名前をコードに合わせ、GoBoard・犬と猫・プレイヤーを追加（設計整合性の検証 B3・B4）。
+* **Update**: GoBoard の用語集をドメインモデルのユビキタス言語に一本化（ルール定義 v1.3 は参照だけに）。コード上の名前をコードに合わせ、GoBoard・犬と猫・プレイヤーを追加（設計整合性の検証 B3・B4）。
+* **Update**: GoBoard の Bolt 1〜5 の計画に範囲を絞った設計図（ドメインモデル図・状態遷移図・画面遷移図）を追加し、リリース計画に方針を追加（設計整合性の検証 B1）。
+* **Update**: GoBoard の Bolt 1〜5 の計画に範囲を絞った設計図（ドメインモデル図・状態遷移図・画面遷移図）を追加し、リリース計画に方針を追加（設計整合性の検証 B1）。
+* **Update**: GoBoard の Bolt 1〜5 の計画に範囲を絞った設計図（ドメインモデル図・状態遷移図・画面遷移図）を追加し、リリース計画に方針を追加（設計整合性の検証 B1）。
+* **Update**: GoBoard の Bolt 1〜5 の計画に範囲を絞った設計図（ドメインモデル図・状態遷移図・画面遷移図）を追加し、リリース計画に方針を追加（設計整合性の検証 B1）。
+* **Update**: GoBoard の Bolt 1〜5 の計画に範囲を絞った設計図（ドメインモデル図・状態遷移図・画面遷移図）を追加し、リリース計画に方針を追加（設計整合性の検証 B1）。
+* **Update**: GoBoard の Bolt 1〜5 の計画に範囲を絞った設計図（ドメインモデル図・状態遷移図・画面遷移図）を追加し、リリース計画に方針を追加（設計整合性の検証 B1）。
+* **Creation**: GoBoard のアーキテクチャ設計を新規作成（v0.1.0 と ADR 0001・0002 から書き起こし）。
+* **Update**: GoBoard の設計整合性の検証を反映（リリース計画の完了条件と U1 の責務、Bolt 1 計画とユーザーストーリーの説明、要件の索引）。
+* **Creation**: GoBoard の UI 設計を新規作成（v0.1.0 のコードから書き起こし）。
+* **Creation**: GoBoard のドメインモデルを新規作成（v0.1.0 のコードから書き起こし）。
+* **Creation**: GoBoard の 2026-09-26 の開発ジャーナルを新規作成。
+* **Creation**: GoBoard リリース完了報告書 v0.1.0 を新規作成。
+* **Update**: GoBoard Bolt 5 の完了を反映（S08・S12、S10 の引き分けの受入条件を達成し、全 12 ストーリーが完了。進捗を 5 / 5 Bolt に更新）。
+* **Update**: GoBoard Bolt 5 の完了を反映（S08・S12、S10 の引き分けの受入条件を達成し、全 12 ストーリーが完了。進捗を 5 / 5 Bolt に更新）。
+* **Creation**: GoBoard Bolt 5 計画を新規作成し、完了結果を記録。
+* **Verification**: [bolt_4_plan](/development/goboard/bolt_4_plan.md) を human:kakimomokuri が検証
+* **Update**: GoBoard Bolt 4 の完了を反映（S11 の受入条件を達成、フィーチャーファイル名を改名、進捗を 4 / 5 Bolt に更新）。
+* **Update**: GoBoard Bolt 4 の完了を反映（S11 の受入条件を達成、フィーチャーファイル名を改名、進捗を 4 / 5 Bolt に更新）。
+* **Creation**: GoBoard Bolt 4 計画を新規作成し、完了結果を記録。
+* **Verification**: [bolt_3_plan](/development/goboard/bolt_3_plan.md) を human:kakimomokuri が検証
+* **Update**: GoBoard の受け入れテストが既定の実行で失敗していた問題（Playwright と Chromium の版のずれ）を記録し、Playwright の固定と GitHub Actions の CI を ADR 0002・リリース計画に反映。
+* **Update**: GoBoard の受け入れテストが既定の実行で失敗していた問題（Playwright と Chromium の版のずれ）を記録し、Playwright の固定と GitHub Actions の CI を ADR 0002・リリース計画に反映。
+* **Update**: GoBoard Bolt 3 の完了を反映（S06・S07、S10 の勝ちの受入条件を達成、進捗を 3 / 5 Bolt に更新）。
+* **Update**: GoBoard Bolt 3 の完了を反映（S06・S07、S10 の勝ちの受入条件を達成、進捗を 3 / 5 Bolt に更新）。
+* **Creation**: GoBoard Bolt 3 計画を新規作成し、完了結果を記録。
+* **Verification**: [bolt_2_plan](/development/goboard/bolt_2_plan.md) を human:kakimomokuri が検証
+* **Update**: GoBoard Bolt 2 の完了を反映（S03・S04・S05・S09 の受入条件を達成、用語に対局 Game を追加、進捗を 2 / 5 Bolt に更新）。
+* **Update**: GoBoard Bolt 2 の完了を反映（S03・S04・S05・S09 の受入条件を達成、用語に対局 Game を追加、進捗を 2 / 5 Bolt に更新）。
+* **Update**: GoBoard Bolt 2 の完了を反映（S03・S04・S05・S09 の受入条件を達成、用語に対局 Game を追加、進捗を 2 / 5 Bolt に更新）。
+* **Creation**: GoBoard Bolt 2 計画を新規作成し、完了結果を記録。
+* **Update**: GoBoard のユーザーストーリーをフィーチャーファイルと対応付け、リリース計画の完了条件に受け入れテストを追加。
+* **Update**: GoBoard のユーザーストーリーをフィーチャーファイルと対応付け、リリース計画の完了条件に受け入れテストを追加。
+* **Update**: GoBoard のユーザーストーリーをフィーチャーファイルと対応付け、リリース計画の完了条件に受け入れテストを追加。
+* **Creation**: GoBoard ADR 0002（Cucumber と Playwright で受け入れテストを書く）を新規作成。
+* **Verification**: [ルール定義](/requirements/goboard/ルール定義.md) を human:kakimomokuri が検証
+* **Update**: GoBoard ルール定義 v1.2（R9：ちょうど 3 つの並びを 2 か所以上作るマスには置けない、R10：置けるマスがなければ引き分け）を反映。ストーリー S11・S12 と Bolt 4 を追加し、Bolt 1 の完了を確定。
+* **Update**: GoBoard ルール定義 v1.2（R9：ちょうど 3 つの並びを 2 か所以上作るマスには置けない、R10：置けるマスがなければ引き分け）を反映。ストーリー S11・S12 と Bolt 4 を追加し、Bolt 1 の完了を確定。
+* **Update**: GoBoard ルール定義 v1.2（R9：ちょうど 3 つの並びを 2 か所以上作るマスには置けない、R10：置けるマスがなければ引き分け）を反映。ストーリー S11・S12 と Bolt 4 を追加し、Bolt 1 の完了を確定。
+* **Update**: GoBoard ルール定義 v1.2（R9：ちょうど 3 つの並びを 2 か所以上作るマスには置けない、R10：置けるマスがなければ引き分け）を反映。ストーリー S11・S12 と Bolt 4 を追加し、Bolt 1 の完了を確定。
+* **Update**: GoBoard Bolt 1（ウォーキングスケルトン）の完了を反映。S01・S02 と S09 の一部の受入条件を達成、リリース計画の進捗と Bolt 1 の結果・学びを記録。
+* **Update**: GoBoard Bolt 1（ウォーキングスケルトン）の完了を反映。S01・S02 と S09 の一部の受入条件を達成、リリース計画の進捗と Bolt 1 の結果・学びを記録。
+* **Update**: GoBoard Bolt 1（ウォーキングスケルトン）の完了を反映。S01・S02 と S09 の一部の受入条件を達成、リリース計画の進捗と Bolt 1 の結果・学びを記録。
+* **Update**: GoBoard のルール定義（v1.1）・ユーザーストーリー・リリース計画・Bolt 1 計画を ADR 0001 に合わせて Web アプリ向けに更新。ルール R1〜R8 は変更なし。
+* **Update**: GoBoard のルール定義（v1.1）・ユーザーストーリー・リリース計画・Bolt 1 計画を ADR 0001 に合わせて Web アプリ向けに更新。ルール R1〜R8 は変更なし。
+* **Update**: GoBoard のルール定義（v1.1）・ユーザーストーリー・リリース計画・Bolt 1 計画を ADR 0001 に合わせて Web アプリ向けに更新。ルール R1〜R8 は変更なし。
+* **Update**: GoBoard のルール定義（v1.1）・ユーザーストーリー・リリース計画・Bolt 1 計画を ADR 0001 に合わせて Web アプリ向けに更新。ルール R1〜R8 は変更なし。
+* **Creation**: GoBoard ADR 0001（TypeScript と React による Web アプリにする）を新規作成。プロダクトオーナーの指示で Go の CLI から変更。
+* **Verification**: [ルール定義](/requirements/goboard/ルール定義.md) を human:kakimomokuri が検証
+* **Creation**: [GoBoard Bolt 1 計画](/development/goboard/bolt_1_plan.md)（ウォーキングスケルトン）を新規作成。
+* **Creation**: [GoBoard リリース計画](/development/goboard/release_plan.md) を新規作成。Intent を Unit U1〜U4 に分解し、ウォーキングスケルトンから始まる 4 Bolt の計画とリスク台帳を定義。
+* **Creation**: [GoBoard ユーザーストーリー](/requirements/goboard/ユーザーストーリー.md) S01〜S10 を新規作成。受入条件をルール R1〜R8 にトレースし、入力形式などの仮定を未確認として明示。
+* **Creation**: [GoBoard ルール定義](/requirements/goboard/ルール定義.md) v1.0 を新規作成。プロダクトオーナーの説明と、委任を受けた AI 案のうち承認された内容を R1〜R8 として記録。ドキュメント構成ガイドに合わせ、プロジェクト識別子 `goboard` のサブディレクトリに配置。
 * **Creation**: [BDD導入ガイド](/reference/BDD導入ガイド.md) を作成（claude-code/claude-opus-5）
 
 ## 2026-09-12
