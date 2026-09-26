@@ -4,7 +4,7 @@ title: "GoBoard リリース計画"
 description: "GoBoard v0.1.0 のリリース計画。Intent・満足条件・Unit 分解（U1〜U4）と依存関係・実装エントロピー評価・Bolt 1〜4 の計画・リスク台帳・未確認の仮定を定める。"
 tags: [development,goboard]
 status: draft
-generated: { by: process:claude-code, at: 2026-09-26T09:38:59Z }
+generated: { by: process:claude-code, at: 2026-09-26T09:45:25Z }
 ---
 
 # GoBoard リリース計画
@@ -156,4 +156,4 @@ U2 と U3 は並列に進められますが、担当は 1 つのモブのため�
 | 2026-09-26 | Bolt 3 の最終確認を反映。Bolt 4（S11）の盤の準備は、ルール（`Game.resume`）に対して直接検証する方式（案 A）で進める |
 | 2026-09-26 | Bolt 4 完了（S11）。進捗を 4 / 5 Bolt に更新 |
 | 2026-09-26 | Bolt 5 完了（S08・S12、S10 の引き分け）。すべての Bolt とストーリーが完了し、v0.1.0 のバージョンと CHANGELOG を作成。Git のタグ付けはプロダクトオーナーの判断を待つ |
-| 2026-09-26 | v0.1.0 をリリース（タグ `v0.1.0`、コミット `2f980dc`）。[リリース完了報告書](./release_report-v0.1.0.md)を作成 |
+| 2026-09-26 | v0.1.0 をリリース（タグ `v0.1.0`、コミット `97ddd23`。タグはプロダクトオーナーが GitHub に作成）。[リリース完了報告書](./release_report-v0.1.0.md)を作成 |
