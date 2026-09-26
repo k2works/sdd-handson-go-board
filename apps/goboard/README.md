@@ -30,4 +30,4 @@
 | `src/ui/` | Web 画面（U4） |
 | `features/` | 受入条件の日本語 Gherkin と、Playwright で操作するステップ定義。タグは `features/tags.md` |
 
-設計判断は [ADR](../../docs/adr/goboard/index.md) を参照してください。
+設計判断は [ADR](../../docs/adr/goboard/index.md) を参照してください。変更の履歴は [CHANGELOG](./CHANGELOG.md) を参照してください。
