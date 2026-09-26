@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Game, type Position } from '../game';
 import { BoardView } from './BoardView';
-import { pieceName, rejectionMessage } from './labels';
+import { rejectionMessage, statusMessage } from './labels';
 
 /**
  * GoBoard の画面（U4）のルート。
@@ -20,7 +20,7 @@ export function App() {
   return (
     <main className="goboard">
       <h1>GoBoard</h1>
-      <p role="status">{pieceName(game.turn)}の手番</p>
+      <p role="status">{statusMessage(game)}</p>
       {message && <p role="alert">{message}</p>}
       <BoardView board={game.board} onSelect={handleSelect} />
     </main>

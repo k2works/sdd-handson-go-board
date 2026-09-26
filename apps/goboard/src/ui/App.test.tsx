@@ -114,3 +114,42 @@ describe('駒のあるマスをクリックしても置けない（S03・S09・R
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
 });
+
+/** 「行,列」の順にマスをクリックする。犬と猫が交互に置く。 */
+async function clickInOrder(user: ReturnType<typeof userEvent.setup>, cells: [number, number][]) {
+  for (const [row, col] of cells) {
+    await user.click(screen.getByRole('button', { name: `${row} 行 ${col} 列 空き` }));
+  }
+}
+
+describe('対局の結果が表示される（S07・S10・R7）', () => {
+  it('犬が横に 5 つ並べると「犬の勝ち」と表示される', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await clickInOrder(user, [[8, 4], [15, 1], [8, 5], [15, 3], [8, 6], [15, 5], [8, 7], [15, 7], [8, 8]]);
+
+    expect(screen.getByRole('status')).toHaveTextContent('犬の勝ち');
+  });
+
+  it('猫が縦に 5 つ並べると「猫の勝ち」と表示される', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await clickInOrder(user, [[15, 1], [4, 8], [15, 3], [5, 8], [15, 5], [6, 8], [15, 7], [7, 8], [15, 9], [8, 8]]);
+
+    expect(screen.getByRole('status')).toHaveTextContent('猫の勝ち');
+  });
+
+  it('結果を表示したあとは、空いているマスをクリックしても駒は置かれず、理由が表示される', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await clickInOrder(user, [[8, 4], [15, 1], [8, 5], [15, 3], [8, 6], [15, 5], [8, 7], [15, 7], [8, 8]]);
+
+    await user.click(screen.getByRole('button', { name: '1 行 1 列 空き' }));
+
+    expect(screen.getByRole('button', { name: '1 行 1 列 空き' })).toHaveTextContent('・');
+    expect(screen.getByRole('alert')).toHaveTextContent('ゲームは終わっているため置けません');
+    expect(screen.getByRole('status')).toHaveTextContent('犬の勝ち');
+  });
+});
