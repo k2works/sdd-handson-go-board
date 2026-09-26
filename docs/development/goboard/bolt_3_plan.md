@@ -4,7 +4,7 @@ title: "GoBoard Bolt 3 計画（勝ち）"
 description: "GoBoard Bolt 3（勝ち）のステップ計画と結果。5 つ以上の連続による勝ち、勝ったあとの拒否、勝ちの表示を実装する。"
 tags: [development,goboard]
 status: stable
-generated: { by: process:claude-code, at: 2026-09-26T08:40:41Z }
+generated: { by: process:claude-code, at: 2026-09-26T11:14:08Z }
 verified:
   - { by: human:kakimomokuri, at: 2026-09-26T08:40:41Z }
 ---
@@ -31,6 +31,74 @@ verified:
 - **ゲームが終わったら置けない（S07）**：勝ちが決まった対局に置こうとすると、理由 `finished` で拒否し、盤は変えない。
 - **途中の盤面から対局を再開できるようにする**：`Game.resume(盤, 手番)`。S07 の「最後の 1 マスで勝ち」は画面のクリックでは準備できないため、この盤面を使い、ルール（`Game`）に対して直接検証する（S04 と同じ方式）。
 - **盤面のフィクスチャ**：「最後の 1 マスに犬を置くと 5 つ並ぶ、224 マスが埋まった盤」を `src/game/testing/boards.ts` に置く。この盤面は探索スクリプトで作り、「犬 112・猫 112、どちらも 5 つ並んでいない、最後の 1 マスに犬を置くと 5 つ並ぶ」ことを総当たりで確かめた。
+
+### 設計図（Bolt 3 の範囲）
+
+図は Bolt 完了後に、この Bolt の範囲に絞って追加した（設計整合性の検証 B1）。色の付いた要素がこの Bolt で追加したもの。全体の図は [ドメインモデル](../../design/goboard/domain-model.md)・[UI 設計](../../design/goboard/ui-design.md) を参照。ER 図は、データベースを持たないため全 Bolt で省略する。
+
+#### ドメインモデル図
+
+```plantuml
+@startuml
+hide empty members
+class "対局 Game" as Game {
+  + turn
+  + outcome : 勝負の状態
+  + {static} start()
+  + {static} resume(盤, 手番)
+  + play(位置)
+}
+class "盤 Board" as Board {
+  + runLength(位置, 向き)
+}
+class "向き Direction" as Dir #FFE0B2 {
+  横・縦・右下がり・右上がり
+}
+class "勝負の状態 Outcome" as Outcome #FFE0B2 {
+  ongoing | win(winner)
+}
+class "置けない理由 RejectionReason" as Reason {
+  occupied | outside | finished
+}
+class "テスト用の盤面\nLAST_CELL_WINS" as Fix #FFE0B2
+Game *-- Board
+Game *-- Outcome
+Board ..> Dir
+Game ..> Reason
+Fix ..> Game : resume で再開
+note right of Reason : finished を追加（S07）
+note bottom of Game : resume を追加
+@enduml
+```
+
+#### 状態遷移図
+
+```plantuml
+@startuml
+state 対局中 {
+  [*] --> 犬の手番
+  犬の手番 --> 猫の手番 : play() 置けた
+  猫の手番 --> 犬の手番 : play() 置けた
+}
+[*] --> 対局中 : start() / resume()
+対局中 --> 勝ち : play() 5 つ以上の連続（R7）
+勝ち --> 勝ち : play() は finished で拒否（S07）
+勝ち --> [*]
+@enduml
+```
+
+#### 画面遷移図
+
+```plantuml
+@startuml
+state 対局中 : 「犬の手番」「猫の手番」
+[*] --> 対局中 : ページを開く
+対局中 --> 対局中 : クリック（置けた・置けない）
+対局中 --> 勝ち : クリック［5 つ以上の連続］（S06・S10）
+勝ち : 「犬の勝ち」「猫の勝ち」
+勝ち --> 勝ち : クリック\n／「ゲームは終わっているため置けません」（S07）
+@enduml
+```
 
 ## ステップ
 
@@ -68,3 +136,9 @@ verified:
 - 「224 マスが埋まり、最後の 1 マスで勝つ」盤面は手で作ると誤りやすい。探索スクリプトで作り、条件を総当たりで確かめてからフィクスチャにした。引き分け用の盤面（最後の 1 マスでも勝たない）も同じ方法で作れる（Bolt 5）。
 - このフィクスチャは R9 を考慮していない。Bolt 4 で R9 を入れたあと、最後の 1 マスが R9 に当たらないことを確かめる。
 - 勝負がついたあとは手番の表示がなくなるため、受け入れテストの「手番を読む」処理は、対局中かどうかを区別する必要があった。
+
+## 改訂履歴
+
+| 日付 | 内容 |
+| :--- | :--- |
+| 2026-09-26 | 設計整合性の検証（B1）を受けて、この Bolt の範囲に絞った設計図を追加 |

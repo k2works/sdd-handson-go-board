@@ -4,7 +4,7 @@ title: "GoBoard Bolt 4 計画（ちょうど 3 つの並び）"
 description: "GoBoard Bolt 4（ちょうど 3 つの並び、R9）のステップ計画と結果。ちょうど 3 つの並びを同時に 2 か所以上作るマスには置けないようにする。"
 tags: [development,goboard]
 status: stable
-generated: { by: process:claude-code, at: 2026-09-26T08:50:43Z }
+generated: { by: process:claude-code, at: 2026-09-26T11:14:08Z }
 verified:
   - { by: human:kakimomokuri, at: 2026-09-26T08:50:43Z }
 ---
@@ -31,6 +31,62 @@ verified:
 - **呼び名**：コード・ファイル名・表示には、ルール定義の言葉（ちょうど 3 つの並び）を使う。既存ゲームの用語は使わない（CLAUDE.md のガードレール）。
 - **受け入れテストの盤の準備（案 A）**：S11 は「特に書いていないマスは空いている」盤を前提にするため、`Game.resume` で盤を作り、ルールに対して直接検証する。置けない理由が画面に表示されることだけは、画面のクリックで盤を準備して確かめる。フィーチャーファイルは Gherkin の「ルール」で、ルールに対する検証と画面での確認を分ける。
 - **既存の盤面への影響の確認**：S07 のフィクスチャ（最後の 1 マスで勝つ盤面）と、Bolt 2・3 の画面のクリックによる盤の準備が、R9 に当たらないことを確かめる。
+
+### 設計図（Bolt 4 の範囲）
+
+図は Bolt 完了後に、この Bolt の範囲に絞って追加した（設計整合性の検証 B1）。色の付いた要素がこの Bolt で追加したもの。全体の図は [ドメインモデル](../../design/goboard/domain-model.md)・[UI 設計](../../design/goboard/ui-design.md) を参照。ER 図は、データベースを持たないため全 Bolt で省略する。
+
+#### ドメインモデル図
+
+```plantuml
+@startuml
+hide empty members
+class "対局 Game" as Game {
+  + play(位置)
+}
+class "盤 Board" as Board {
+  + runLength(位置, 向き)
+}
+class "置けない理由 RejectionReason" as Reason {
+  occupied | outside | exactThrees | finished
+}
+class "着手の判定（関数）" as Rules #FFE0B2 {
+  countExactThrees(盤, 位置)
+}
+Game ..> Rules : 置く前に判定（R9 → R7 の順）
+Rules ..> Board : 仮に置いた盤で runLength
+Game ..> Reason
+note right of Reason : exactThrees を追加（R9）
+@enduml
+```
+
+#### 状態遷移図
+
+```plantuml
+@startuml
+state 対局中 {
+  [*] --> 犬の手番
+  犬の手番 --> 猫の手番 : play() 置けた
+  猫の手番 --> 犬の手番 : play() 置けた
+  犬の手番 --> 犬の手番 : play() exactThrees（R9）
+  猫の手番 --> 猫の手番 : play() exactThrees（R9）
+}
+[*] --> 対局中
+対局中 --> 勝ち : play() 5 つ以上の連続（R9 に当たらない場合）
+勝ち --> [*]
+@enduml
+```
+
+#### 画面遷移図
+
+```plantuml
+@startuml
+state 対局中 : 「犬の手番」「猫の手番」
+[*] --> 対局中 : ページを開く
+対局中 --> 対局中 : ちょうど 3 つの並びを 2 か所以上作るマスをクリック\n／「ちょうど 3 つの並びが同時に 2 か所以上\nできるため置けません」（S11）
+対局中 --> 勝ち : クリック［5 つ以上の連続］
+@enduml
+```
 
 ## ステップ
 
@@ -70,3 +126,9 @@ verified:
 - R9 は「駒を置くときのルール」で、「盤の状態の不変条件」ではない。`Board.place` で判定すると、テストの盤面（フィクスチャ）を作ることさえできなくなるため、判定は `Game.play` に置いた。
 - 同じフィーチャーファイルの中で「ルールに対する検証」と「画面での確認」を分けるには、Gherkin の「ルール」ごとに背景を持たせるのが読みやすかった。
 - フィーチャーファイル名に既存ゲームの用語（double three）が入っていたのを、ルール定義の言葉（two exact threes）に改めた。ガードレールは、コードだけでなくファイル名やテスト名にも当てはまる。
+
+## 改訂履歴
+
+| 日付 | 内容 |
+| :--- | :--- |
+| 2026-09-26 | 設計整合性の検証（B1）を受けて、この Bolt の範囲に絞った設計図を追加 |

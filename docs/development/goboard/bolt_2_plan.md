@@ -4,7 +4,7 @@ title: "GoBoard Bolt 2 計画（置けない場所と手番）"
 description: "GoBoard Bolt 2（置けない場所と手番）のステップ計画と結果。駒のあるマス・盤の外の拒否、犬と猫の交互の手番、手番と置けない理由の表示を実装する。"
 tags: [development,goboard]
 status: stable
-generated: { by: process:claude-code, at: 2026-09-26T08:21:27Z }
+generated: { by: process:claude-code, at: 2026-09-26T11:14:08Z }
 verified:
   - { by: human:kakimomokuri, at: 2026-09-26T08:21:28Z }
 ---
@@ -31,6 +31,69 @@ verified:
 - **画面は `Game` にだけ話しかける**：手番の表示・置けない理由の表示は、`Game` の結果をそのまま表示する。
 - **受け入れテストでの盤の準備**：画面のクリックで準備する。指定した駒を置くために相手の手番が必要なときは、相手の駒をシナリオと関係のない 15 行目に置く。S11（Bolt 4）のように「特に書いていないマスは空いている」を守る必要がある準備の方式は、Bolt 4 で改めて提案する。
 - **盤の外（S04）**：画面からは盤の外を選べないため、S04 のシナリオはブラウザを使わず、ルール（`Game`）に対して直接検証する。
+
+### 設計図（Bolt 2 の範囲）
+
+図は Bolt 完了後に、この Bolt の範囲に絞って追加した（設計整合性の検証 B1）。色の付いた要素がこの Bolt で追加したもの。全体の図は [ドメインモデル](../../design/goboard/domain-model.md)・[UI 設計](../../design/goboard/ui-design.md) を参照。ER 図は、データベースを持たないため全 Bolt で省略する。
+
+#### ドメインモデル図
+
+```plantuml
+@startuml
+hide empty members
+class "対局 Game" as Game #FFE0B2 {
+  + turn : 駒
+  + {static} start()
+  + play(位置) : 着手の結果
+}
+class "盤 Board" as Board {
+  + pieceAt(位置)
+  + placeability(位置)
+  + place(位置, 駒)
+}
+class "置けるかどうか Placeability" as P #FFE0B2 {
+  ok | occupied | outside
+}
+class "着手の結果 PlayResult" as R #FFE0B2 {
+  ok: 新しい対局
+  ng: 元の対局 ＋ 理由
+}
+class "置けない理由 RejectionReason" as Reason #FFE0B2 {
+  occupied | outside
+}
+class "駒 Piece" as Piece
+Game *-- Board
+Game *-- Piece : 手番
+Board ..> P
+Game ..> R
+R o-- Reason
+note bottom of Board : place は置けないマスなら例外（R2・R5・R6）
+@enduml
+```
+
+#### 状態遷移図
+
+```plantuml
+@startuml
+[*] --> 犬の手番 : start()（R4）
+犬の手番 --> 猫の手番 : play() 置けた
+猫の手番 --> 犬の手番 : play() 置けた
+犬の手番 --> 犬の手番 : play() occupied / outside\n（盤も手番も変わらない）
+猫の手番 --> 猫の手番 : play() occupied / outside
+@enduml
+```
+
+#### 画面遷移図
+
+```plantuml
+@startuml
+[*] --> 犬の手番 : ページを開く
+犬の手番 --> 猫の手番 : 空いているマスをクリック（S05）
+猫の手番 --> 犬の手番 : 空いているマスをクリック（S05）
+犬の手番 --> 犬の手番 : 駒のあるマスをクリック\n／置けない理由を表示（S03）
+猫の手番 --> 猫の手番 : 駒のあるマスをクリック\n／置けない理由を表示（S03・S09）
+@enduml
+```
 
 ## ステップ
 
@@ -66,3 +129,9 @@ verified:
 - リファクタリング中に、盤の外の位置（例：1 行 16 列）の `pieceAt` が隣の行のマスを返す不具合を見つけた。Bolt 1 では「盤の外の扱いはテストで決めていない」として残していたもので、テストで再現してから直した。
 - Cucumber の `{int},{int}` は `{float}` と曖昧になるため、位置の並びはパラメータ型（`{positions}`）で受け取る。
 - 画面のクリックだけで盤を準備すると、相手の駒を置いて手番を進める必要がある。Bolt 2 では最下段に置いた。S11（Bolt 4）のように「特に書いていないマスは空いている」必要があるシナリオでは、この方式は使えない（Bolt 4 で準備の方式を提案する）。
+
+## 改訂履歴
+
+| 日付 | 内容 |
+| :--- | :--- |
+| 2026-09-26 | 設計整合性の検証（B1）を受けて、この Bolt の範囲に絞った設計図を追加 |

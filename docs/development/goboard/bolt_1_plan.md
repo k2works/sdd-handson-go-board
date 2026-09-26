@@ -4,7 +4,7 @@ title: "GoBoard Bolt 1 計画（ウォーキングスケルトン）"
 description: "GoBoard Bolt 1（ウォーキングスケルトン）のステップ計画。空の盤の表示から、マスのクリックで犬の駒を置いて表示するまでを TDD で通す。"
 tags: [development,goboard]
 status: draft
-generated: { by: process:claude-code, at: 2026-09-26T08:14:10Z }
+generated: { by: process:claude-code, at: 2026-09-26T11:14:08Z }
 ---
 
 # GoBoard Bolt 1 計画（ウォーキングスケルトン）
@@ -23,6 +23,54 @@ generated: { by: process:claude-code, at: 2026-09-26T08:14:10Z }
 | 承認ゲート | 各ステップ（最初の Bolt のため） |
 
 Bolt 1 には手番（U2）がないため、置く駒は常に犬とします。手番の交代と置けない場所の拒否は Bolt 2 で扱います。
+
+## 設計
+
+### 設計図（Bolt 1 の範囲）
+
+図は Bolt 完了後に、この Bolt の範囲に絞って追加した（設計整合性の検証 B1）。色の付いた要素がこの Bolt で追加したもの。全体の図は [ドメインモデル](../../design/goboard/domain-model.md)・[UI 設計](../../design/goboard/ui-design.md) を参照。ER 図は、データベースを持たないため全 Bolt で省略する。
+
+#### ドメインモデル図
+
+```plantuml
+@startuml
+hide empty members
+class "盤 Board" as Board #FFE0B2 {
+  + {static} empty()
+  + pieceAt(位置)
+  + place(位置, 駒)
+}
+class "駒 Piece" as Piece #FFE0B2 {
+  dog | cat
+}
+class "位置 Position" as Position #FFE0B2 {
+  row, col（1 始まり）
+}
+class "マス Cell" as Cell #FFE0B2 {
+  駒 | null（空き）
+}
+Board "1" *-- "225" Cell
+Cell o-- Piece
+Board ..> Position
+note bottom of Board : 置くと新しい盤を返す（元の盤は変えない）
+@enduml
+```
+
+#### 状態遷移図
+
+この Bolt には状態を持つ対局（`Game`）がないため省略する（盤は不変の値オブジェクト）。
+
+#### 画面遷移図
+
+```plantuml
+@startuml
+[*] --> 空の盤 : ページを開く（S01）
+空の盤 : 「GoBoard」と 225 マスの「・」
+空の盤 --> 駒のある盤 : マスをクリック（S09）
+駒のある盤 --> 駒のある盤 : マスをクリック
+駒のある盤 : クリックしたマスに 🐶（Bolt 1 は常に犬）
+@enduml
+```
 
 ## 着手前に確認すること
 
@@ -82,3 +130,4 @@ Bolt 1 には手番（U2）がないため、置く駒は常に犬とします�
 | :--- | :--- |
 | 2026-09-26 | 初版（Go の CLI として計画。ステップ 1 まで実施） |
 | 2026-09-26 | ADR 0001 に合わせて TypeScript・React の Web アプリに変更。ステップ 1 を TypeScript でやり直した |
+| 2026-09-26 | 設計整合性の検証（B1）を受けて、この Bolt の範囲に絞った設計図を追加 |

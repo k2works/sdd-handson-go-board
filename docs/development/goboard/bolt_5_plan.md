@@ -4,7 +4,7 @@ title: "GoBoard Bolt 5 計画（引き分けとリリース）"
 description: "GoBoard Bolt 5（引き分けとリリース）のステップ計画と結果。盤が埋まったときと置けるマスがなくなったときの引き分け、引き分けの表示、v0.1.0 のバージョンと CHANGELOG を扱う。"
 tags: [development,goboard]
 status: draft
-generated: { by: process:claude-code, at: 2026-09-26T09:34:46Z }
+generated: { by: process:claude-code, at: 2026-09-26T11:14:08Z }
 ---
 
 # GoBoard Bolt 5 計画（引き分けとリリース）
@@ -33,6 +33,65 @@ generated: { by: process:claude-code, at: 2026-09-26T09:34:46Z }
 - **引き分けの表示の確認（S12）**：画面で到達しにくいため、画面が使う表示の関数（`statusMessage`）で、ルールに対して「引き分け」と表示されることを確かめる。盤が埋まる引き分けの表示（S10）は画面で確かめる。
 - **リリース**：`apps/goboard/package.json` のバージョンを 0.1.0 にし、`apps/goboard/CHANGELOG.md` を作る。Git のタグ付けは外部に公開する操作のため、プロダクトオーナーの判断を待つ。
 - **仮定 A3**：もう 1 局続けて遊ぶ機能は v0.1.0 に含めない（仮定のとおり、何も作らない）。
+
+### 設計図（Bolt 5 の範囲）
+
+図は Bolt 完了後に、この Bolt の範囲に絞って追加した（設計整合性の検証 B1）。色の付いた要素がこの Bolt で追加したもの。全体の図は [ドメインモデル](../../design/goboard/domain-model.md)・[UI 設計](../../design/goboard/ui-design.md) を参照。ER 図は、データベースを持たないため全 Bolt で省略する。
+
+#### ドメインモデル図
+
+```plantuml
+@startuml
+hide empty members
+class "対局 Game" as Game {
+  + outcome
+  + {static} resume(盤, 手番)
+  + play(位置)
+}
+class "勝負の状態 Outcome" as Outcome {
+  ongoing | win(winner) | draw
+}
+class "着手の判定（関数）" as Rules {
+  rejectionOf(盤, 位置, 駒)
+  hasPlaceableCell(盤, 駒)
+  outcomeAfter(盤, 位置, 置いた駒, 次の駒)
+}
+class "テスト用の盤面\nFULL_BOARD_DRAW\nNO_PLACEABLE_DRAW\nmovesToFill" as Fix #FFE0B2
+Game *-- Outcome
+Game ..> Rules
+Fix ..> Game
+note right of Outcome : draw を追加（R8・R10）
+note bottom of Rules : rejectionOf を play と R10 で共有\nhasPlaceableCell・outcomeAfter を追加
+@enduml
+```
+
+#### 状態遷移図
+
+```plantuml
+@startuml
+[*] --> 対局中 : start() / resume()
+対局中 --> 対局中 : play() 置けた・勝負なし／置けない
+対局中 --> 勝ち : play() 5 つ以上の連続（R7）
+対局中 --> 引き分け : play() 盤が埋まった（R8）\nまたは次の手番が置けない（R10）
+勝ち --> 勝ち : play() は finished
+引き分け --> 引き分け : play() は finished
+勝ち --> [*]
+引き分け --> [*]
+@enduml
+```
+
+#### 画面遷移図
+
+```plantuml
+@startuml
+state 対局中 : 「犬の手番」「猫の手番」
+[*] --> 対局中 : ページを開く
+対局中 --> 勝ち : クリック［5 つ以上の連続］
+対局中 --> 引き分け : クリック［盤が埋まった］（S08）\nクリック［次の手番が置けるマスがない］（S12）
+引き分け : 「引き分け」（S10）
+引き分け --> 引き分け : クリック\n／「ゲームは終わっているため置けません」
+@enduml
+```
 
 ## ステップ
 
@@ -76,3 +135,9 @@ generated: { by: process:claude-code, at: 2026-09-26T09:34:46Z }
 ### 未確認のこと
 
 - 他のブラウザ（Firefox・Safari）での見た目（リスク K1）。この開発環境には Chromium しかなく、確かめていない。プロダクトオーナーのリリース判断の前に、手元のブラウザで確かめてもらう。
+
+## 改訂履歴
+
+| 日付 | 内容 |
+| :--- | :--- |
+| 2026-09-26 | 設計整合性の検証（B1）を受けて、この Bolt の範囲に絞った設計図を追加 |
