@@ -4,7 +4,7 @@ title: "GoBoard Bolt 4 計画（ちょうど 3 つの並び）"
 description: "GoBoard Bolt 4（ちょうど 3 つの並び、R9）のステップ計画と結果。ちょうど 3 つの並びを同時に 2 か所以上作るマスには置けないようにする。"
 tags: [development,goboard]
 status: draft
-generated: { by: process:claude-code, at: 2026-09-26T08:47:46Z }
+generated: { by: process:claude-code, at: 2026-09-26T08:48:51Z }
 ---
 
 # GoBoard Bolt 4 計画（ちょうど 3 つの並び）
@@ -42,7 +42,7 @@ generated: { by: process:claude-code, at: 2026-09-26T08:47:46Z }
 
 - [x] S11 のシナリオから `@wip` を外し、`npm run test:acceptance` が成功する
 - [x] `apps/goboard/` で `npm run typecheck`・`npm test`・`npm run build` が成功する
-- [ ] push したコミットで GitHub Actions の GoBoard CI が成功している
+- [x] push したコミットで GitHub Actions の GoBoard CI が成功している
 - [x] `src/game/` が React や DOM に依存していない
 - [x] ルール定義にない振る舞いを加えていない
 
@@ -53,6 +53,7 @@ generated: { by: process:claude-code, at: 2026-09-26T08:47:46Z }
 | 受け入れテスト | 54 シナリオ・345 ステップすべて成功（Bolt 4 で S11 の 14 シナリオを追加） |
 | 単体テスト | 71 件すべて成功（ルール 56 件、画面 15 件） |
 | 型チェック・ビルド | `npm run typecheck`・`npm run build` 成功 |
+| CI | GoBoard CI（コミット d87e547、実行 36230831056）が成功 |
 | 依存の向き | `src/game/` に React・DOM の import なし |
 | 変異の確認 | 置けなくなる並びの数を 3 に変えると、受け入れテストが 9 シナリオ失敗することを確認して元に戻した |
 | 既存の盤面への影響 | S07 のフィクスチャ（最後の 1 マスで勝つ盤面）と、Bolt 2・3 の画面のクリックによる盤の準備は、R9 に当たらなかった |
