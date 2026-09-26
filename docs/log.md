@@ -1,6 +1,7 @@
 # Docs Update Log
 
 ## 2026-09-26
+* **Creation**: GoBoard リリース完了報告書 v0.1.0 を新規作成。
 * **Update**: GoBoard Bolt 5 の完了を反映（S08・S12、S10 の引き分けの受入条件を達成し、全 12 ストーリーが完了。進捗を 5 / 5 Bolt に更新）。
 * **Update**: GoBoard Bolt 5 の完了を反映（S08・S12、S10 の引き分けの受入条件を達成し、全 12 ストーリーが完了。進捗を 5 / 5 Bolt に更新）。
 * **Creation**: GoBoard Bolt 5 計画を新規作成し、完了結果を記録。
