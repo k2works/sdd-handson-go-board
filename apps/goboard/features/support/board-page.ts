@@ -49,4 +49,27 @@ export class BoardPage {
   async clickCell(row: number, col: number): Promise<void> {
     await this.grid().getByRole('button', { name: new RegExp(`^${row} 行 ${col} 列 `) }).click();
   }
+
+  /** 手番の表示（例：「犬の手番」）から、手番のプレイヤーを読み取る。 */
+  async currentTurn(): Promise<PieceName> {
+    const text = (await this.page.getByRole('status').textContent()) ?? '';
+    const match = /^(犬|猫)の手番$/.exec(text.trim());
+    if (!match) {
+      throw new Error(`手番の表示を読み取れません: "${text}"`);
+    }
+    return match[1] as PieceName;
+  }
+
+  alert(): Locator {
+    return this.page.getByRole('alert');
+  }
+
+  passButtons(): Locator {
+    return this.page.getByRole('button', { name: /パス|手番を渡す/ });
+  }
+
+  /** 盤のすべてのマスの読み上げ名（盤の状態のスナップショット）。 */
+  async snapshot(): Promise<string[]> {
+    return this.cells().evaluateAll((buttons) => buttons.map((b) => b.getAttribute('aria-label') ?? ''));
+  }
 }
