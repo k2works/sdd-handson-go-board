@@ -8,7 +8,8 @@ Then('手番は{piece}である', async function (this: GoBoardWorld, piece: Pie
 });
 
 Then('手番は{piece}のままである', async function (this: GoBoardWorld, piece: PieceName) {
-  assert.equal(await this.board.currentTurn(), piece);
+  const current = this.game ? toPieceName(this.game.turn) : await this.board.currentTurn();
+  assert.equal(current, piece);
 });
 
 Then('手番は置こうとしたプレイヤーのままである', async function (this: GoBoardWorld) {

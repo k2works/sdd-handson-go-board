@@ -15,6 +15,8 @@ export class GoBoardWorld extends World {
   /** ルールに対して直接検証するときの対局。undefined ならブラウザで検証する。 */
   game?: Game;
   lastResult?: PlayResult;
+  /** 置こうとする直前の対局（ルールに対して検証するとき）。 */
+  gameBefore?: Game;
   /** 置こうとしたプレイヤー（置く直前の手番）。 */
   playerBefore?: PieceName;
   /** 置こうとする直前の盤（ブラウザで検証するとき）。 */

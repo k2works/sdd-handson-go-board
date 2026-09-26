@@ -14,6 +14,12 @@ Given('{int} 行 {int} 列が空いている', async function (this: GoBoardWorl
 });
 
 Given('{piece}の駒が {positions} にある', async function (this: GoBoardWorld, piece: PieceName, positions: Position[]) {
+  if (this.game) {
+    // ルールに対して検証するときは、手番や R9 を通さずに盤へ直接置く。特に書いていないマスは空いたまま。
+    const board = positions.reduce((current, position) => current.place(position, toPiece(piece)), this.game.board);
+    this.game = Game.resume(board, this.game.turn);
+    return;
+  }
   for (const { row, col } of positions) {
     await ensureTurn(this, piece);
     await this.board.cell(row, col, '空き').click();
@@ -22,7 +28,7 @@ Given('{piece}の駒が {positions} にある', async function (this: GoBoardWor
 
 Given('{piece}の手番である', async function (this: GoBoardWorld, piece: PieceName) {
   if (this.game) {
-    assert.equal(toPieceName(this.game.turn), piece);
+    this.game = Game.resume(this.game.board, toPiece(piece));
     return;
   }
   await ensureTurn(this, piece);
@@ -31,6 +37,12 @@ Given('{piece}の手番である', async function (this: GoBoardWorld, piece: Pi
 When(
   '{piece}のプレイヤーが {int} 行 {int} 列に置く',
   async function (this: GoBoardWorld, piece: PieceName, row: number, col: number) {
+    if (this.game) {
+      assert.equal(toPieceName(this.game.turn), piece, `${piece}の手番ではない`);
+      playOnRules(this, { row, col });
+      assert.ok(this.lastResult?.ok, `${row} 行 ${col} 列に置けなかった`);
+      return;
+    }
     assert.equal(await this.board.currentTurn(), piece, `${piece}の手番ではない`);
     await this.board.clickCell(row, col);
   },
@@ -39,6 +51,11 @@ When(
 When(
   '{piece}のプレイヤーが {int} 行 {int} 列に置こうとする',
   async function (this: GoBoardWorld, piece: PieceName, row: number, col: number) {
+    if (this.game) {
+      assert.equal(toPieceName(this.game.turn), piece, `${piece}の手番ではない`);
+      playOnRules(this, { row, col });
+      return;
+    }
     // 勝負がついたあと（S07）は手番の表示がないため、対局中のときだけ手番を確かめる。
     const turn = await this.board.turnIfOngoing();
     if (turn) {
@@ -61,12 +78,19 @@ When('手番のプレイヤーが {int} 行 {int} 列に置こうとする', asy
   await tryToPlace(this, { row, col });
 });
 
+/** ルール（Game）に対して、手番のプレイヤーとして置こうとする。 */
+function playOnRules(world: GoBoardWorld, position: Position): void {
+  assert.ok(world.game);
+  world.gameBefore = world.game;
+  world.playerBefore = toPieceName(world.game.turn);
+  world.lastResult = world.game.play(position);
+  world.game = world.lastResult.game;
+}
+
 /** 手番のプレイヤーとして置こうとする。ルールに対して検証するときは Game に、それ以外は画面で置く。 */
 async function tryToPlace(world: GoBoardWorld, position: Position): Promise<void> {
   if (world.game) {
-    world.playerBefore = toPieceName(world.game.turn);
-    world.lastResult = world.game.play(position);
-    world.game = world.lastResult.game;
+    playOnRules(world, position);
     return;
   }
   world.playerBefore = await world.board.currentTurn();
@@ -86,6 +110,10 @@ Then('置けない', async function (this: GoBoardWorld) {
 Then(
   '{int} 行 {int} 列が{piece}の駒になる',
   async function (this: GoBoardWorld, row: number, col: number, piece: PieceName) {
+    if (this.game) {
+      assert.equal(this.game.board.pieceAt({ row, col }), toPiece(piece));
+      return;
+    }
     assert.equal(await this.board.cell(row, col, piece).count(), 1);
   },
 );
@@ -111,4 +139,13 @@ Then('ほかの {int} マスは置く前と同じく空いている', async func
 
 Then('盤の駒は {int} つだけである', async function (this: GoBoardWorld, count: number) {
   assert.equal(await this.board.occupiedCells().count(), count);
+});
+
+Then('盤は置こうとする前と変わらない', async function (this: GoBoardWorld) {
+  if (this.game) {
+    assert.ok(this.gameBefore);
+    assert.equal(this.game.board, this.gameBefore.board);
+    return;
+  }
+  assert.deepEqual(await this.board.snapshot(), this.boardBefore);
 });
