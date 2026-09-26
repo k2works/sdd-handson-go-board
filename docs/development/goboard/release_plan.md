@@ -4,7 +4,7 @@ title: "GoBoard リリース計画"
 description: "GoBoard v0.1.0 のリリース計画。Intent・満足条件・Unit 分解（U1〜U4）と依存関係・実装エントロピー評価・Bolt 1〜4 の計画・リスク台帳・未確認の仮定を定める。"
 tags: [development,goboard]
 status: draft
-generated: { by: process:claude-code, at: 2026-09-26T08:36:16Z }
+generated: { by: process:claude-code, at: 2026-09-26T08:40:41Z }
 ---
 
 # GoBoard リリース計画
@@ -105,7 +105,7 @@ U2 と U3 は並列に進められますが、担当は 1 つのモブのため�
 | :--- | :--- | :--- |
 | Bolt 1 | [bolt_1_plan.md](./bolt_1_plan.md) | 完了 |
 | Bolt 2 | [bolt_2_plan.md](./bolt_2_plan.md) | 完了 |
-| Bolt 3 | [bolt_3_plan.md](./bolt_3_plan.md) | 完了（最終確認待ち） |
+| Bolt 3 | [bolt_3_plan.md](./bolt_3_plan.md) | 完了 |
 | Bolt 4 | Bolt 3 完了時に作成する | 未着手 |
 | Bolt 5 | Bolt 4 完了時に作成する | 未着手 |
 
@@ -137,7 +137,7 @@ U2 と U3 は並列に進められますが、担当は 1 つのモブのため�
 | :--- | :--- | :--- |
 | Bolt 1 | 完了 | S01・S02 完了、S09 の一部（クリックで犬を置く） |
 | Bolt 2 | 完了 | S03・S04・S05 完了、S09 完了 |
-| Bolt 3 | 完了（最終確認待ち） | S06・S07 完了、S10 の勝ち |
+| Bolt 3 | 完了 | S06・S07 完了、S10 の勝ち |
 | Bolt 4 | 未着手 | - |
 | Bolt 5 | 未着手 | - |
 | **合計** | **3 / 5 Bolt** | **8 / 12 ストーリー（S10 は引き分けを除く）** |
@@ -153,3 +153,4 @@ U2 と U3 は並列に進められますが、担当は 1 つのモブのため�
 | 2026-09-26 | Bolt 2 完了（S03・S04・S05・S09）。進捗を 2 / 5 Bolt、6 / 12 ストーリーに更新 |
 | 2026-09-26 | Bolt 3 完了（S06・S07、S10 の勝ち）。進捗を 3 / 5 Bolt に更新 |
 | 2026-09-26 | 受け入れテストが手元の既定の実行で失敗していた（Playwright の版と Chromium の版のずれ）。Playwright を 1.56.1 に固定し、GitHub Actions の GoBoard CI を追加。完了条件に CI の成功を加えた |
+| 2026-09-26 | Bolt 3 の最終確認を反映。Bolt 4（S11）の盤の準備は、ルール（`Game.resume`）に対して直接検証する方式（案 A）で進める |

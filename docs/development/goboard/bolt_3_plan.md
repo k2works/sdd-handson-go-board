@@ -3,8 +3,10 @@ type: Plan
 title: "GoBoard Bolt 3 計画（勝ち）"
 description: "GoBoard Bolt 3（勝ち）のステップ計画と結果。5 つ以上の連続による勝ち、勝ったあとの拒否、勝ちの表示を実装する。"
 tags: [development,goboard]
-status: draft
-generated: { by: process:claude-code, at: 2026-09-26T08:30:32Z }
+status: stable
+generated: { by: process:claude-code, at: 2026-09-26T08:40:41Z }
+verified:
+  - { by: human:kakimomokuri, at: 2026-09-26T08:40:41Z }
 ---
 
 # GoBoard Bolt 3 計画（勝ち）
@@ -37,7 +39,7 @@ generated: { by: process:claude-code, at: 2026-09-26T08:30:32Z }
 - [x] 3. 勝ったあとのテストを書き、置けないこと（`finished`）と、最後の 1 マスでの勝ちを実装する（S07）
 - [x] 4. 画面のテストを書き、「犬の勝ち」「猫の勝ち」の表示と、勝ったあとのクリックの拒否を実装する（S10）
 - [x] 5. S06・S07・S10（勝ち）のシナリオから `@wip` を外し、ステップ定義を実装する
-- [?] 6. 受入条件のチェックボックス・リリース計画の進捗・本計画の結果を更新する。※ 最終ステップのため人が確認する
+- [x] 6. 受入条件のチェックボックス・リリース計画の進捗・本計画の結果を更新する。※ 最終ステップのため人が確認する
 
 ## 完了条件
 

@@ -1,6 +1,7 @@
 # Docs Update Log
 
 ## 2026-09-26
+* **Verification**: [bolt_3_plan](/development/goboard/bolt_3_plan.md) を human:kakimomokuri が検証
 * **Update**: GoBoard の受け入れテストが既定の実行で失敗していた問題（Playwright と Chromium の版のずれ）を記録し、Playwright の固定と GitHub Actions の CI を ADR 0002・リリース計画に反映。
 * **Update**: GoBoard の受け入れテストが既定の実行で失敗していた問題（Playwright と Chromium の版のずれ）を記録し、Playwright の固定と GitHub Actions の CI を ADR 0002・リリース計画に反映。
 * **Update**: GoBoard Bolt 3 の完了を反映（S06・S07、S10 の勝ちの受入条件を達成、進捗を 3 / 5 Bolt に更新）。
