@@ -3,8 +3,10 @@ type: Design
 title: "GoBoard UI 設計"
 description: "GoBoard の画面の UI 設計。画面一覧、1 画面の状態遷移、画面イメージ、UI のモデル、置けないときのフィードバック、キーボードと読み上げ、改善候補を、v0.1.0 のコードから書き起こし、ストーリー S01〜S12 に対応づける。"
 tags: [design,goboard]
-status: draft
+status: stable
 generated: { by: process:claude-code, at: 2026-09-26T11:05:09Z }
+verified:
+  - { by: human:kakimomokuri, at: 2026-09-26T11:19:23Z }
 ---
 
 # GoBoard UI 設計

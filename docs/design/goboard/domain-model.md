@@ -3,8 +3,10 @@ type: Design
 title: "GoBoard ドメインモデル"
 description: "GoBoard の対局ルールのドメインモデル。ユビキタス言語、値オブジェクト、対局の集約と不変条件 I1〜I8、ドメインサービス、設計上の判断を、v0.1.0 のコードから書き起こし、ルール R1〜R10 にトレースする。"
 tags: [design,goboard]
-status: draft
+status: stable
 generated: { by: process:claude-code, at: 2026-09-26T11:18:19Z }
+verified:
+  - { by: human:kakimomokuri, at: 2026-09-26T11:19:23Z }
 ---
 
 # GoBoard ドメインモデル

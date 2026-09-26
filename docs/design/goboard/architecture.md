@@ -3,8 +3,10 @@ type: Design
 title: "GoBoard アーキテクチャ設計"
 description: "GoBoard のアーキテクチャ設計。ブラウザで完結する構成、対局ルールと画面の分離、テストの形、フロントエンドの構成、CI と静的ファイル、配信先とタグの扱いなど要判断の点を、v0.1.0 と ADR 0001・0002 から書き起こす。"
 tags: [design,goboard]
-status: draft
+status: stable
 generated: { by: process:claude-code, at: 2026-09-26T11:11:35Z }
+verified:
+  - { by: human:kakimomokuri, at: 2026-09-26T11:19:23Z }
 ---
 
 # GoBoard アーキテクチャ設計
