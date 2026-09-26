@@ -6,3 +6,5 @@
  */
 export { BOARD_SIZE, Board } from './board';
 export type { Cell, Piece, Placeability, Position } from './board';
+export { Game } from './game';
+export type { PlayResult, RejectionReason } from './game';
