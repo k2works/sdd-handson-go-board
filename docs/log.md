@@ -1,6 +1,9 @@
 # Docs Update Log
 
 ## 2026-09-26
+* **Update**: GoBoard Bolt 3 の完了を反映（S06・S07、S10 の勝ちの受入条件を達成、進捗を 3 / 5 Bolt に更新）。
+* **Update**: GoBoard Bolt 3 の完了を反映（S06・S07、S10 の勝ちの受入条件を達成、進捗を 3 / 5 Bolt に更新）。
+* **Creation**: GoBoard Bolt 3 計画を新規作成し、完了結果を記録。
 * **Verification**: [bolt_2_plan](/development/goboard/bolt_2_plan.md) を human:kakimomokuri が検証
 * **Update**: GoBoard Bolt 2 の完了を反映（S03・S04・S05・S09 の受入条件を達成、用語に対局 Game を追加、進捗を 2 / 5 Bolt に更新）。
 * **Update**: GoBoard Bolt 2 の完了を反映（S03・S04・S05・S09 の受入条件を達成、用語に対局 Game を追加、進捗を 2 / 5 Bolt に更新）。
