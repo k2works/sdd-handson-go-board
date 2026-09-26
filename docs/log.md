@@ -1,6 +1,7 @@
 # Docs Update Log
 
 ## 2026-09-26
+* **Verification**: [ルール定義](/requirements/goboard/ルール定義.md) を human:kakimomokuri が検証
 * **Creation**: [GoBoard Bolt 1 計画](/development/goboard/bolt_1_plan.md)（ウォーキングスケルトン）を新規作成。
 * **Creation**: [GoBoard リリース計画](/development/goboard/release_plan.md) を新規作成。Intent を Unit U1〜U4 に分解し、ウォーキングスケルトンから始まる 4 Bolt の計画とリスク台帳を定義。
 * **Creation**: [GoBoard ユーザーストーリー](/requirements/goboard/ユーザーストーリー.md) S01〜S10 を新規作成。受入条件をルール R1〜R8 にトレースし、入力形式などの仮定を未確認として明示。
