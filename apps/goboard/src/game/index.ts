@@ -5,4 +5,4 @@
  * ここにはそこに書かれたルールだけを実装する。React や DOM には依存しない。
  */
 export { BOARD_SIZE, Board } from './board';
-export type { Cell, Piece, Position } from './board';
+export type { Cell, Piece, Placeability, Position } from './board';
