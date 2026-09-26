@@ -1,6 +1,9 @@
 # Docs Update Log
 
 ## 2026-09-26
+* **Update**: GoBoard Bolt 5 の完了を反映（S08・S12、S10 の引き分けの受入条件を達成し、全 12 ストーリーが完了。進捗を 5 / 5 Bolt に更新）。
+* **Update**: GoBoard Bolt 5 の完了を反映（S08・S12、S10 の引き分けの受入条件を達成し、全 12 ストーリーが完了。進捗を 5 / 5 Bolt に更新）。
+* **Creation**: GoBoard Bolt 5 計画を新規作成し、完了結果を記録。
 * **Verification**: [bolt_4_plan](/development/goboard/bolt_4_plan.md) を human:kakimomokuri が検証
 * **Update**: GoBoard Bolt 4 の完了を反映（S11 の受入条件を達成、フィーチャーファイル名を改名、進捗を 4 / 5 Bolt に更新）。
 * **Update**: GoBoard Bolt 4 の完了を反映（S11 の受入条件を達成、フィーチャーファイル名を改名、進捗を 4 / 5 Bolt に更新）。
