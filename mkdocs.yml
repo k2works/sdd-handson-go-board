@@ -80,6 +80,7 @@ nav:
       - 概要: design/index.md
       - GoBoard:
           - 概要: design/goboard/index.md
+          - アーキテクチャ設計: design/goboard/architecture.md
           - ドメインモデル: design/goboard/domain-model.md
           - UI 設計: design/goboard/ui-design.md
   - 開発:
