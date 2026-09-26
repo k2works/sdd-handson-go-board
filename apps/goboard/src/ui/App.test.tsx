@@ -153,3 +153,17 @@ describe('対局の結果が表示される（S07・S10・R7）', () => {
     expect(screen.getByRole('status')).toHaveTextContent('犬の勝ち');
   });
 });
+
+describe('ちょうど 3 つの並びを 2 か所以上作るマスをクリックしても置けない（S11・R9）', () => {
+  it('駒は置かれず、置けない理由が表示され、手番は犬のまま', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await clickInOrder(user, [[8, 6], [15, 1], [8, 7], [15, 3], [6, 8], [15, 5], [7, 8], [15, 7]]);
+
+    await user.click(screen.getByRole('button', { name: '8 行 8 列 空き' }));
+
+    expect(screen.getByRole('button', { name: '8 行 8 列 空き' })).toHaveTextContent('・');
+    expect(screen.getByRole('alert')).toHaveTextContent('ちょうど 3 つの並びが同時に 2 か所以上できるため置けません');
+    expect(screen.getByRole('status')).toHaveTextContent('犬の手番');
+  });
+});
