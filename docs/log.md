@@ -1,6 +1,9 @@
 # Docs Update Log
 
 ## 2026-09-26
+* **Update**: GoBoard Bolt 4 の完了を反映（S11 の受入条件を達成、フィーチャーファイル名を改名、進捗を 4 / 5 Bolt に更新）。
+* **Update**: GoBoard Bolt 4 の完了を反映（S11 の受入条件を達成、フィーチャーファイル名を改名、進捗を 4 / 5 Bolt に更新）。
+* **Creation**: GoBoard Bolt 4 計画を新規作成し、完了結果を記録。
 * **Verification**: [bolt_3_plan](/development/goboard/bolt_3_plan.md) を human:kakimomokuri が検証
 * **Update**: GoBoard の受け入れテストが既定の実行で失敗していた問題（Playwright と Chromium の版のずれ）を記録し、Playwright の固定と GitHub Actions の CI を ADR 0002・リリース計画に反映。
 * **Update**: GoBoard の受け入れテストが既定の実行で失敗していた問題（Playwright と Chromium の版のずれ）を記録し、Playwright の固定と GitHub Actions の CI を ADR 0002・リリース計画に反映。
