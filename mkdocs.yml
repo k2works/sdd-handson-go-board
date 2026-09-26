@@ -90,6 +90,9 @@ nav:
       - 概要: review/index.md
   - ADR:
       - 概要: adr/index.md
+      - GoBoard:
+          - 概要: adr/goboard/index.md
+          - 0001 TypeScript と React による Web アプリにする: adr/goboard/0001-TypeScriptとReactによるWebアプリにする.md
   - 記事:
       - 概要: article/index.md
   - リファレンス:

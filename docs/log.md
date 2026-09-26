@@ -1,6 +1,11 @@
 # Docs Update Log
 
 ## 2026-09-26
+* **Update**: GoBoard のルール定義（v1.1）・ユーザーストーリー・リリース計画・Bolt 1 計画を ADR 0001 に合わせて Web アプリ向けに更新。ルール R1〜R8 は変更なし。
+* **Update**: GoBoard のルール定義（v1.1）・ユーザーストーリー・リリース計画・Bolt 1 計画を ADR 0001 に合わせて Web アプリ向けに更新。ルール R1〜R8 は変更なし。
+* **Update**: GoBoard のルール定義（v1.1）・ユーザーストーリー・リリース計画・Bolt 1 計画を ADR 0001 に合わせて Web アプリ向けに更新。ルール R1〜R8 は変更なし。
+* **Update**: GoBoard のルール定義（v1.1）・ユーザーストーリー・リリース計画・Bolt 1 計画を ADR 0001 に合わせて Web アプリ向けに更新。ルール R1〜R8 は変更なし。
+* **Creation**: GoBoard ADR 0001（TypeScript と React による Web アプリにする）を新規作成。プロダクトオーナーの指示で Go の CLI から変更。
 * **Verification**: [ルール定義](/requirements/goboard/ルール定義.md) を human:kakimomokuri が検証
 * **Creation**: [GoBoard Bolt 1 計画](/development/goboard/bolt_1_plan.md)（ウォーキングスケルトン）を新規作成。
 * **Creation**: [GoBoard リリース計画](/development/goboard/release_plan.md) を新規作成。Intent を Unit U1〜U4 に分解し、ウォーキングスケルトンから始まる 4 Bolt の計画とリスク台帳を定義。
