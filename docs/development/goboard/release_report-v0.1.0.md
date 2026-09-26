@@ -16,7 +16,7 @@ GoBoard v0.1.0 は最初のリリースです。1 台のブラウザで 2 人が
 | 項目 | 内容 |
 | :--- | :--- |
 | バージョン | v0.1.0（`apps/goboard/package.json`） |
-| タグ | `v0.1.0`（コミット `2f980dc`） |
+| タグ | `v0.1.0` |
 | 開発期間 | 2026-09-26（1 日。Intent の表明から約 2 時間） |
 | 方法論 | AI-DLC（Intent → Unit → Bolt。XP の TDD を AI が回し、人が承認ゲートで検証） |
 | 変更内容 | [CHANGELOG](../../../apps/goboard/CHANGELOG.md) |
