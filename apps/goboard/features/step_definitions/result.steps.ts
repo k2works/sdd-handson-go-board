@@ -4,6 +4,7 @@ import { Game, WIN_LENGTH } from '../../src/game';
 import { LAST_CELL_WINS, boardFromRows } from '../../src/game/testing/boards';
 import type { PieceName } from '../support/board-page';
 import { ensureTurn } from '../support/turns';
+import { statusMessage } from '../../src/ui/labels';
 import { toPiece, type GoBoardWorld } from '../support/world';
 
 /** 勝ちを作る並び。8 行 4〜7 列に置いたあと、8 行 8 列に置くと横に 5 つ並ぶ。 */
@@ -70,6 +71,19 @@ Then('駒は置かれない', async function (this: GoBoardWorld) {
 });
 
 Then('最後の盤と {string} が表示される', async function (this: GoBoardWorld, text: string) {
+  if (this.game) {
+    // 画面で用意できない盤面では、画面が使う表示の関数で確かめる。
+    assert.equal(statusMessage(this.game), text);
+    return;
+  }
   assert.equal(await this.board.statusText(), text);
   assert.deepEqual(await this.board.snapshot(), this.boardAtEnd);
+});
+
+Then('引き分けになる', async function (this: GoBoardWorld) {
+  if (this.game) {
+    assert.deepEqual(this.game.outcome, { kind: 'draw' });
+    return;
+  }
+  assert.equal(await this.board.statusText(), '引き分け');
 });

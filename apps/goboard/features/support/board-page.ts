@@ -78,6 +78,27 @@ export class BoardPage {
     return this.page.getByRole('button', { name: /パス|手番を渡す/ });
   }
 
+  /**
+   * 指定した順にマスをクリックする（盤の準備用）。数百手を速く置くため、ブラウザの中でボタンを
+   * クリックし、1 手ごとに画面の更新を待ってから次の手を置く。
+   */
+  async clickAllInOrder(positions: readonly { row: number; col: number }[]): Promise<void> {
+    await this.page.evaluate(async (cells) => {
+      const buttons = new Map(
+        [...document.querySelectorAll<HTMLButtonElement>('[role="grid"] button')].map((button) => [
+          (button.getAttribute('aria-label') ?? '').replace(/ (空き|犬|猫)$/, ''),
+          button,
+        ]),
+      );
+      for (const { row, col } of cells) {
+        const button = buttons.get(`${row} 行 ${col} 列`);
+        if (!button) throw new Error(`${row} 行 ${col} 列のマスがない`);
+        button.click();
+        await new Promise((resolve) => setTimeout(resolve, 0));
+      }
+    }, positions);
+  }
+
   /** 盤のすべてのマスの読み上げ名（盤の状態のスナップショット）。 */
   async snapshot(): Promise<string[]> {
     return this.cells().evaluateAll((buttons) => buttons.map((b) => b.getAttribute('aria-label') ?? ''));
