@@ -55,3 +55,62 @@ describe('マスをクリックして駒を置く（S09）', () => {
     expect(screen.getAllByRole('button', { name: /空き$/ })).toHaveLength(224);
   });
 });
+
+describe('手番を表示し、交互に置く（S05・S09・R4・R5）', () => {
+  it('開いた直後は「犬の手番」と表示される', () => {
+    render(<App />);
+
+    expect(screen.getByRole('status')).toHaveTextContent('犬の手番');
+  });
+
+  it('犬が置くと「猫の手番」と表示される', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: '8 行 8 列 空き' }));
+
+    expect(screen.getByRole('status')).toHaveTextContent('猫の手番');
+  });
+
+  it('猫の手番にクリックすると猫の駒（🐱）が置かれ、「犬の手番」に戻る', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole('button', { name: '8 行 8 列 空き' }));
+    await user.click(screen.getByRole('button', { name: '9 行 9 列 空き' }));
+
+    expect(screen.getByRole('button', { name: '9 行 9 列 猫' })).toHaveTextContent('🐱');
+    expect(screen.getByRole('status')).toHaveTextContent('犬の手番');
+  });
+
+  it('手番を相手に渡す操作（パス）は表示されない', () => {
+    render(<App />);
+
+    expect(screen.queryByRole('button', { name: /パス|手番を渡す/ })).not.toBeInTheDocument();
+  });
+});
+
+describe('駒のあるマスをクリックしても置けない（S03・S09・R5・R6）', () => {
+  it('駒は変わらず、置けない理由が表示され、手番は猫のまま', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await user.click(screen.getByRole('button', { name: '3 行 4 列 空き' }));
+
+    await user.click(screen.getByRole('button', { name: '3 行 4 列 犬' }));
+
+    expect(screen.getByRole('button', { name: '3 行 4 列 犬' })).toHaveTextContent('🐶');
+    expect(screen.getByRole('alert')).toHaveTextContent('そのマスにはすでに駒があるため置けません');
+    expect(screen.getByRole('status')).toHaveTextContent('猫の手番');
+  });
+
+  it('次に置けたら、置けない理由の表示は消える', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await user.click(screen.getByRole('button', { name: '3 行 4 列 空き' }));
+    await user.click(screen.getByRole('button', { name: '3 行 4 列 犬' }));
+
+    await user.click(screen.getByRole('button', { name: '9 行 9 列 空き' }));
+
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
+});

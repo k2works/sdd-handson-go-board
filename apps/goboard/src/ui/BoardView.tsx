@@ -1,5 +1,6 @@
-import { BOARD_SIZE, type Board, type Cell, type Position } from '../game';
+import { BOARD_SIZE, type Board, type Position } from '../game';
 import './BoardView.css';
+import { cellName, cellSymbol } from './labels';
 
 type Props = {
   board: Board;
@@ -34,28 +35,4 @@ export function BoardView({ board, onSelect }: Props) {
       ))}
     </div>
   );
-}
-
-/** マスの表示（ルール定義「表示」）。 */
-function cellSymbol(cell: Cell): string {
-  switch (cell) {
-    case 'dog':
-      return '🐶';
-    case 'cat':
-      return '🐱';
-    case null:
-      return '・';
-  }
-}
-
-/** マスの状態の読み上げ名。 */
-function cellName(cell: Cell): string {
-  switch (cell) {
-    case 'dog':
-      return '犬';
-    case 'cat':
-      return '猫';
-    case null:
-      return '空き';
-  }
 }

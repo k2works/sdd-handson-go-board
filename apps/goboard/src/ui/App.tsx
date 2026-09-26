@@ -1,23 +1,28 @@
 import { useState } from 'react';
-import { Board, type Position } from '../game';
+import { Game, type Position } from '../game';
 import { BoardView } from './BoardView';
+import { pieceName, rejectionMessage } from './labels';
 
 /**
  * GoBoard の画面（U4）のルート。
- * ルールの判断は src/game に問い合わせ、ここでは行わない。
+ * ルールの判断は src/game の Game に問い合わせ、ここでは行わない。
  */
 export function App() {
-  const [board, setBoard] = useState(() => Board.empty());
+  const [game, setGame] = useState(() => Game.start());
+  const [message, setMessage] = useState<string | null>(null);
 
-  // Bolt 1 には手番（U2）がないため、置く駒は常に犬とする。
   const handleSelect = (position: Position) => {
-    setBoard((current) => current.place(position, 'dog'));
+    const result = game.play(position);
+    setGame(result.game);
+    setMessage(result.ok ? null : rejectionMessage(result.reason));
   };
 
   return (
     <main className="goboard">
       <h1>GoBoard</h1>
-      <BoardView board={board} onSelect={handleSelect} />
+      <p role="status">{pieceName(game.turn)}の手番</p>
+      {message && <p role="alert">{message}</p>}
+      <BoardView board={game.board} onSelect={handleSelect} />
     </main>
   );
 }
