@@ -4,4 +4,5 @@
  * ルールの唯一の正解は docs/requirements/goboard/ルール定義.md であり、
  * ここにはそこに書かれたルールだけを実装する。React や DOM には依存しない。
  */
-export {};
+export { BOARD_SIZE, Board } from './board';
+export type { Cell, Piece, Position } from './board';

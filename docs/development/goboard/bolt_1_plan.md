@@ -4,7 +4,7 @@ title: "GoBoard Bolt 1 計画（ウォーキングスケルトン）"
 description: "GoBoard Bolt 1（ウォーキングスケルトン）のステップ計画。空の盤の表示から、座標入力で犬の駒を置いて表示するまでを TDD で通す。"
 tags: [development,goboard]
 status: draft
-generated: { by: process:claude-code, at: 2026-09-26T07:56:09Z }
+generated: { by: process:claude-code, at: 2026-09-26T07:58:35Z }
 ---
 
 # GoBoard Bolt 1 計画（ウォーキングスケルトン）
@@ -32,9 +32,9 @@ Bolt 1 には手番（U2）がないため、置く駒は常に犬とします�
 
 状態の記号は [リリース・イテレーション計画ガイド（AI-DLC 版）](../../reference/リリース・イテレーション計画ガイド_AI-DLC版.md) の状態ボードに従います。
 
-- [?] 1. プロジェクト構成を作る：`apps/goboard/` に TypeScript・React・Vite・Vitest の設定と、ルール（`src/game/`、U1〜U3）と画面（`src/ui/`、U4）の置き場所を作る。※ 新規ファイル・構造変更・外部ライブラリ導入のため要確認
-- [ ] 2. 盤のテストを書く（Red）：新しい盤は 15 行 × 15 列で、225 マスすべてが空いている（S01）
-- [ ] 3. 盤を実装する（Green）→ リファクタリング
+- [x] 1. プロジェクト構成を作る：`apps/goboard/` に TypeScript・React・Vite・Vitest の設定と、ルール（`src/game/`、U1〜U3）と画面（`src/ui/`、U4）の置き場所を作る。※ 新規ファイル・構造変更・外部ライブラリ導入のため要確認
+- [x] 2. 盤のテストを書く（Red）：新しい盤は 15 行 × 15 列で、225 マスすべてが空いている（S01）
+- [?] 3. 盤を実装する（Green）→ リファクタリング
 - [ ] 4. 駒を置くテストを書く（Red）：空いているマスに犬を置くとそのマスが犬になり、ほかの 224 マスは変わらない（S02）
 - [ ] 5. 駒を置く処理を実装する（Green）→ リファクタリング
 - [ ] 6. 盤の画面のテストを書く（Red）：Testing Library で、「GoBoard」の名前と、225 個の空いているマス（`・`）が表示されることを確かめる（S01）
