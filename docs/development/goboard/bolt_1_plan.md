@@ -1,7 +1,7 @@
 ---
 type: Plan
 title: "GoBoard Bolt 1 計画（ウォーキングスケルトン）"
-description: "GoBoard Bolt 1（ウォーキングスケルトン）のステップ計画。空の盤の表示から、座標入力で犬の駒を置いて表示するまでを TDD で通す。"
+description: "GoBoard Bolt 1（ウォーキングスケルトン）のステップ計画。空の盤の表示から、マスのクリックで犬の駒を置いて表示するまでを TDD で通す。"
 tags: [development,goboard]
 status: draft
 generated: { by: process:claude-code, at: 2026-09-26T08:14:10Z }

@@ -1,6 +1,7 @@
 # Docs Update Log
 
 ## 2026-09-26
+* **Update**: GoBoard の設計整合性の検証を反映（リリース計画の完了条件と U1 の責務、Bolt 1 計画とユーザーストーリーの説明、要件の索引）。
 * **Creation**: GoBoard の UI 設計を新規作成（v0.1.0 のコードから書き起こし）。
 * **Creation**: GoBoard のドメインモデルを新規作成（v0.1.0 のコードから書き起こし）。
 * **Creation**: GoBoard リリース完了報告書 v0.1.0 を新規作成。
