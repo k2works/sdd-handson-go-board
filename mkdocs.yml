@@ -72,11 +72,18 @@ nav:
       - 概要: strategy/index.md
   - 要件:
       - 概要: requirements/index.md
-      - GoBoard ルール定義: requirements/GoBoard_ルール定義.md
+      - GoBoard:
+          - 概要: requirements/goboard/index.md
+          - ルール定義: requirements/goboard/ルール定義.md
+          - ユーザーストーリー: requirements/goboard/ユーザーストーリー.md
   - 設計:
       - 概要: design/index.md
   - 開発:
       - 概要: development/index.md
+      - GoBoard:
+          - 概要: development/goboard/index.md
+          - リリース計画: development/goboard/release_plan.md
+          - Bolt 1 計画: development/goboard/bolt_1_plan.md
   - 運用:
       - 概要: operation/index.md
   - レビュー:
