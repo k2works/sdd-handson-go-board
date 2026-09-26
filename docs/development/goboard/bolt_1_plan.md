@@ -4,7 +4,7 @@ title: "GoBoard Bolt 1 計画（ウォーキングスケルトン）"
 description: "GoBoard Bolt 1（ウォーキングスケルトン）のステップ計画。空の盤の表示から、座標入力で犬の駒を置いて表示するまでを TDD で通す。"
 tags: [development,goboard]
 status: draft
-generated: { by: process:claude-code, at: 2026-09-26T08:08:48Z }
+generated: { by: process:claude-code, at: 2026-09-26T08:14:10Z }
 ---
 
 # GoBoard Bolt 1 計画（ウォーキングスケルトン）
@@ -59,6 +59,7 @@ Bolt 1 には手番（U2）がないため、置く駒は常に犬とします�
 | 自動テスト | 11 件すべて成功（ルール 6 件、画面 5 件） |
 | 型チェック・ビルド | `npm run typecheck`・`npm run build` 成功 |
 | 依存の向き | `src/game/` に React・DOM の import なし |
+| 受け入れテスト（Bolt 1 のあとに追加） | ADR 0002 で Cucumber と Playwright を導入し、Bolt 1 で満たした受入条件（S01・S02・S09 の 1 件）の 7 シナリオがブラウザで成功 |
 | ブラウザでの表示（ステップ 10） | Chromium で確認。225 マスすべてが 36 × 36 px でそろい、8 行 8 列・3 行 4 列のクリックで 🐶 が表示された。プロダクトオーナーが確認済み |
 
 ### 仮説の検証

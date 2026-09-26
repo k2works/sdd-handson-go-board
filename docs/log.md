@@ -1,6 +1,10 @@
 # Docs Update Log
 
 ## 2026-09-26
+* **Update**: GoBoard のユーザーストーリーをフィーチャーファイルと対応付け、リリース計画の完了条件に受け入れテストを追加。
+* **Update**: GoBoard のユーザーストーリーをフィーチャーファイルと対応付け、リリース計画の完了条件に受け入れテストを追加。
+* **Update**: GoBoard のユーザーストーリーをフィーチャーファイルと対応付け、リリース計画の完了条件に受け入れテストを追加。
+* **Creation**: GoBoard ADR 0002（Cucumber と Playwright で受け入れテストを書く）を新規作成。
 * **Verification**: [ルール定義](/requirements/goboard/ルール定義.md) を human:kakimomokuri が検証
 * **Update**: GoBoard ルール定義 v1.2（R9：ちょうど 3 つの並びを 2 か所以上作るマスには置けない、R10：置けるマスがなければ引き分け）を反映。ストーリー S11・S12 と Bolt 4 を追加し、Bolt 1 の完了を確定。
 * **Update**: GoBoard ルール定義 v1.2（R9：ちょうど 3 つの並びを 2 か所以上作るマスには置けない、R10：置けるマスがなければ引き分け）を反映。ストーリー S11・S12 と Bolt 4 を追加し、Bolt 1 の完了を確定。

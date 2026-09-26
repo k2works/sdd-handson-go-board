@@ -93,6 +93,7 @@ nav:
       - GoBoard:
           - 概要: adr/goboard/index.md
           - 0001 TypeScript と React による Web アプリにする: adr/goboard/0001-TypeScriptとReactによるWebアプリにする.md
+          - 0002 Cucumber と Playwright で受け入れテストを書く: adr/goboard/0002-CucumberとPlaywrightで受け入れテストを書く.md
   - 記事:
       - 概要: article/index.md
   - リファレンス:
