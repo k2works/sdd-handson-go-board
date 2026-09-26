@@ -3,8 +3,10 @@ type: Plan
 title: "GoBoard Bolt 4 計画（ちょうど 3 つの並び）"
 description: "GoBoard Bolt 4（ちょうど 3 つの並び、R9）のステップ計画と結果。ちょうど 3 つの並びを同時に 2 か所以上作るマスには置けないようにする。"
 tags: [development,goboard]
-status: draft
-generated: { by: process:claude-code, at: 2026-09-26T08:48:51Z }
+status: stable
+generated: { by: process:claude-code, at: 2026-09-26T08:50:43Z }
+verified:
+  - { by: human:kakimomokuri, at: 2026-09-26T08:50:43Z }
 ---
 
 # GoBoard Bolt 4 計画（ちょうど 3 つの並び）
@@ -36,7 +38,7 @@ generated: { by: process:claude-code, at: 2026-09-26T08:48:51Z }
 - [x] 2. 画面のテストを書き、置けない理由（ちょうど 3 つの並び）の表示を実装する
 - [x] 3. S11 のフィーチャーファイルを「ルール」で分け、`@wip` を外してステップ定義を実装する
 - [x] 4. 既存の単体テスト・受け入れテスト・フィクスチャが R9 に当たらないことを確かめる
-- [?] 5. 受入条件のチェックボックス・リリース計画の進捗・本計画の結果を更新し、CI の成功を確かめる。※ 最終ステップのため人が確認する
+- [x] 5. 受入条件のチェックボックス・リリース計画の進捗・本計画の結果を更新し、CI の成功を確かめる。※ 最終ステップのため人が確認する
 
 ## 完了条件
 

@@ -1,6 +1,7 @@
 # Docs Update Log
 
 ## 2026-09-26
+* **Verification**: [bolt_4_plan](/development/goboard/bolt_4_plan.md) を human:kakimomokuri が検証
 * **Update**: GoBoard Bolt 4 の完了を反映（S11 の受入条件を達成、フィーチャーファイル名を改名、進捗を 4 / 5 Bolt に更新）。
 * **Update**: GoBoard Bolt 4 の完了を反映（S11 の受入条件を達成、フィーチャーファイル名を改名、進捗を 4 / 5 Bolt に更新）。
 * **Creation**: GoBoard Bolt 4 計画を新規作成し、完了結果を記録。
