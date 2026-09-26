@@ -12,6 +12,8 @@ export function statusMessage(game: Game): string {
       return `${pieceName(game.turn)}の手番`;
     case 'win':
       return `${pieceName(game.outcome.winner)}の勝ち`;
+    case 'draw':
+      return '引き分け';
   }
 }
 

@@ -16,8 +16,11 @@ export const EXACT_THREES_LIMIT = 2;
  */
 export type RejectionReason = Exclude<Placeability, 'ok'> | 'exactThrees' | 'finished';
 
-/** 勝負の状態。ongoing：対局中、win：勝ちが決まった（R7）。 */
-export type Outcome = { readonly kind: 'ongoing' } | { readonly kind: 'win'; readonly winner: Piece };
+/** 勝負の状態。ongoing：対局中、win：勝ちが決まった（R7）、draw：引き分け（R8・R10）。 */
+export type Outcome =
+  | { readonly kind: 'ongoing' }
+  | { readonly kind: 'win'; readonly winner: Piece }
+  | { readonly kind: 'draw' };
 
 /** 駒を置こうとした結果。置けなかったときは、置こうとする前の対局と理由を返す。 */
 export type PlayResult =
@@ -25,6 +28,7 @@ export type PlayResult =
   | { readonly ok: false; readonly game: Game; readonly reason: RejectionReason };
 
 const ONGOING: Outcome = { kind: 'ongoing' };
+const DRAW: Outcome = { kind: 'draw' };
 
 /** 対局（U2・U3）。盤と手番と勝負の状態を持ち、手番のプレイヤーの駒を置くたびに手番を交代する。 */
 export class Game {
@@ -39,14 +43,21 @@ export class Game {
     return new Game(Board.empty(), 'dog', ONGOING);
   }
 
-  /** 途中の盤面と手番から対局を再開する。盤にすでに 5 つ以上の並びがあれば、その種類の勝ちで終わっている。 */
+  /**
+   * 途中の盤面と手番から対局を再開する。盤にすでに 5 つ以上の並びがあればその種類の勝ち、
+   * 盤が埋まっているか手番のプレイヤーが置けるマスがなければ引き分けで終わっている。
+   */
   static resume(board: Board, turn: Piece): Game {
     const winner = findWinner(board);
-    return new Game(board, turn, winner ? { kind: 'win', winner } : ONGOING);
+    if (winner) {
+      return new Game(board, turn, { kind: 'win', winner });
+    }
+    return new Game(board, turn, hasPlaceableCell(board, turn) ? ONGOING : DRAW);
   }
 
   /**
    * 手番のプレイヤーの駒を置く（R5）。置いたあとに勝ちを判定し（R7・R8）、勝ちでなければ手番を相手に渡す（R4）。
+   * 勝ちがなく、盤が埋まったか（R8）、次の手番のプレイヤーが置けるマスがなければ（R10）、引き分けで終わる。
    * 置けなければ、盤も手番も変えずに理由を返す（パスにはならない）。
    * 置けるかどうか（R9 を含む）は、置く前に判定する。そのため R9 に当たるマスは、5 つ並ぶマスでも置けない。
    */
@@ -54,22 +65,48 @@ export class Game {
     if (this.outcome.kind !== 'ongoing') {
       return { ok: false, game: this, reason: 'finished' };
     }
-    const placeability = this.board.placeability(position);
-    if (placeability !== 'ok') {
-      return { ok: false, game: this, reason: placeability };
+    const rejection = rejectionOf(this.board, position, this.turn);
+    if (rejection) {
+      return { ok: false, game: this, reason: rejection };
     }
     const board = this.board.place(position, this.turn);
-    if (countExactThrees(board, position) >= EXACT_THREES_LIMIT) {
-      return { ok: false, game: this, reason: 'exactThrees' };
-    }
-    const outcome: Outcome = makesWinningLine(board, position) ? { kind: 'win', winner: this.turn } : ONGOING;
-    return { ok: true, game: new Game(board, opponentOf(this.turn), outcome) };
+    const next = opponentOf(this.turn);
+    return { ok: true, game: new Game(board, next, outcomeAfter(board, position, this.turn, next)) };
   }
 }
 
 /** 指定したマスを通る 4 方向のどれかに、5 つ以上の連続があるか（R7）。 */
 function makesWinningLine(board: Board, position: Position): boolean {
   return Object.values(DIRECTIONS).some((direction) => board.runLength(position, direction) >= WIN_LENGTH);
+}
+
+/** 置いたあとの勝負の状態。勝ち（R7）→ 盤の埋まり（R8）→ 次の手番のプレイヤーが置けるマスの有無（R10）の順に判定する。 */
+function outcomeAfter(board: Board, position: Position, placed: Piece, next: Piece): Outcome {
+  if (makesWinningLine(board, position)) {
+    return { kind: 'win', winner: placed };
+  }
+  return hasPlaceableCell(board, next) ? ONGOING : DRAW;
+}
+
+/** 指定したマスに指定した駒を置けない理由。置けるなら null。盤の外・駒のあるマス → R9 の順に判定する。 */
+function rejectionOf(board: Board, position: Position, piece: Piece): RejectionReason | null {
+  const placeability = board.placeability(position);
+  if (placeability !== 'ok') {
+    return placeability;
+  }
+  return countExactThrees(board.place(position, piece), position) >= EXACT_THREES_LIMIT ? 'exactThrees' : null;
+}
+
+/** 指定した駒を置けるマスが 1 つでもあるか（R10）。盤が埋まっていれば false（R8）。 */
+function hasPlaceableCell(board: Board, piece: Piece): boolean {
+  for (let row = 1; row <= BOARD_SIZE; row++) {
+    for (let col = 1; col <= BOARD_SIZE; col++) {
+      if (rejectionOf(board, { row, col }, piece) === null) {
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 /**

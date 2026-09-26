@@ -1,6 +1,7 @@
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
+import { FULL_BOARD_DRAW, movesToFill } from '../game/testing/boards';
 import { App } from './App';
 
 describe('GoBoard の画面を開く（S01）', () => {
@@ -165,5 +166,25 @@ describe('ちょうど 3 つの並びを 2 か所以上作るマスをクリッ�
     expect(screen.getByRole('button', { name: '8 行 8 列 空き' })).toHaveTextContent('・');
     expect(screen.getByRole('alert')).toHaveTextContent('ちょうど 3 つの並びが同時に 2 か所以上できるため置けません');
     expect(screen.getByRole('status')).toHaveTextContent('犬の手番');
+  });
+});
+
+describe('引き分けが表示される（S08・S10・R8）', () => {
+  it('犬と猫が交互に置いて盤が埋まり、勝ちがなければ「引き分け」と表示される', () => {
+    render(<App />);
+    const moves = movesToFill(FULL_BOARD_DRAW.rows, FULL_BOARD_DRAW.lastCell);
+
+    // マスのボタンは再描画されても同じ要素のままなので、最初に 1 回だけ集めて使い回す（225 手を速く置くため）。
+    const cells = new Map(
+      within(screen.getByRole('grid', { name: '盤' }))
+        .getAllByRole('button')
+        .map((button) => [button.getAttribute('aria-label')?.replace(/ 空き$/, ''), button]),
+    );
+    for (const { row, col } of moves) {
+      fireEvent.click(cells.get(`${row} 行 ${col} 列`)!);
+    }
+
+    expect(screen.getByRole('status')).toHaveTextContent('引き分け');
+    expect(screen.queryAllByRole('button', { name: /空き$/ })).toHaveLength(0);
   });
 });
